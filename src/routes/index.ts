@@ -1,3 +1,4 @@
 import Router from "./Router";
+import routes from "./routePaths";
 
-export { Router };
+export { Router, routes };
