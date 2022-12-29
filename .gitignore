@@ -24,3 +24,6 @@ yarn-error.log*
 
 /counterSlice.ts
 /counterSlice.spec.ts
+/concepts.md
+/Models.ts
+/demoview.png
