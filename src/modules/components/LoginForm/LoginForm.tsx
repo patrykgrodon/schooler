@@ -21,7 +21,7 @@ const LoginForm = () => {
         {...register("password")}
         size="small"
         type="password"
-        label="Password"
+        label="Hasło"
       />
       <Button>Zaloguj się</Button>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
