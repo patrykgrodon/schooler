@@ -1,11 +1,24 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
+import { useAppDispatch } from "app/hooks";
+import { authActions } from "modules/auth/authSlice";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { routes } from "routes";
 
 const LoginForm = () => {
-  const { register } = useForm();
+  const navigate = useNavigate();
+  const { register, handleSubmit } = useForm();
+  const dispatch = useAppDispatch();
+
+  const submitLogin = () => {
+    dispatch(authActions.login());
+    navigate(routes.Base, { replace: true });
+  };
+
   return (
     <Box
       component="form"
+      onSubmit={handleSubmit(submitLogin)}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -23,7 +36,7 @@ const LoginForm = () => {
         type="password"
         label="Hasło"
       />
-      <Button>Zaloguj się</Button>
+      <Button type="submit">Zaloguj się</Button>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button variant="text">Zarejestruj się</Button>
         <Button variant="text">Przypomnij hasło</Button>
