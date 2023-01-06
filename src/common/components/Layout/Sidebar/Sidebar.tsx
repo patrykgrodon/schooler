@@ -1,14 +1,23 @@
-import { List, Divider } from "@mui/material";
-import { MoveToInbox, Mail } from "@mui/icons-material";
-import { Drawer } from "./SidebarStyles";
+import {
+  CalendarMonth,
+  CalendarViewMonthOutlined,
+  GradeOutlined,
+  MessageOutlined,
+} from "@mui/icons-material";
+import { List } from "@mui/material";
 import SidebarListItem from "./SidebarListItem/SidebarListItem";
+import { Drawer } from "./SidebarStyles";
 
 type SidebarProps = {
   isOpen: boolean;
 };
 
-const primaryList = ["Inbox", "Starred", "Send email", "Drafts"];
-const secondaryList = ["All mail", "Trash", "Spam"];
+const sidebarStudentItems = [
+  { label: "Plan lekcji", Icon: CalendarMonth },
+  { label: "Oceny", Icon: GradeOutlined },
+  { label: "Obecności", Icon: CalendarViewMonthOutlined },
+  { label: "Wiadomości", Icon: MessageOutlined },
+];
 
 const Sidebar = ({ isOpen }: SidebarProps) => {
   return (
@@ -17,23 +26,12 @@ const Sidebar = ({ isOpen }: SidebarProps) => {
       variant="permanent"
       open={isOpen}>
       <List>
-        {primaryList.map((text, index) => (
+        {sidebarStudentItems.map(({ label, Icon }) => (
           <SidebarListItem
-            key={text}
-            text={text}
+            key={label}
+            text={label}
             isOpen={isOpen}
-            Icon={index % 2 === 0 ? <MoveToInbox /> : <Mail />}
-          />
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {secondaryList.map((text, index) => (
-          <SidebarListItem
-            key={text}
-            text={text}
-            isOpen={isOpen}
-            Icon={index % 2 === 0 ? <MoveToInbox /> : <Mail />}
+            Icon={<Icon />}
           />
         ))}
       </List>

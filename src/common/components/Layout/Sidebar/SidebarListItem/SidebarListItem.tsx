@@ -28,7 +28,11 @@ const SidebarListItem = ({ text, Icon, isOpen }: SidebarListItemProps) => {
           }}>
           {Icon}
         </ListItemIcon>
-        <ListItemText primary={text} sx={{ opacity: isOpen ? 1 : 0 }} />
+        <ListItemText
+          primary={text}
+          primaryTypographyProps={{ variant: "subtitle1" }}
+          sx={{ opacity: isOpen ? 1 : 0, fontWeight: 700 }}
+        />
       </ListItemButton>
     </ListItem>
   );
