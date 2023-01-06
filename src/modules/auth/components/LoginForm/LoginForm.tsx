@@ -39,7 +39,12 @@ const LoginForm = () => {
       <Typography variant="h3" component="h1">
         Logowanie
       </Typography>
-      <TextField {...register("email")} size="small" label="E-mail" />
+      <TextField
+        {...register("email")}
+        type="email"
+        size="small"
+        label="E-mail"
+      />
       <PasswordField {...register("password")} size="small" label="Hasło" />
       <RequestButton type="submit" isLoading={isLoggingIn}>
         Zaloguj się
