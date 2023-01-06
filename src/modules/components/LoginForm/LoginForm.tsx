@@ -1,5 +1,6 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useAppDispatch } from "app/hooks";
+import Spinner from "common/components/Spinner/Spinner";
 import { authActions } from "modules/auth/authSlice";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +16,7 @@ const LoginForm = () => {
     navigate(routes.Base, { replace: true });
   };
 
+  if (!!"s") return <Spinner size="large" fullPage />;
   return (
     <Box
       component="form"
