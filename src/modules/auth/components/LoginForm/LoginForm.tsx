@@ -4,8 +4,6 @@ import { PasswordField, RequestButton } from "common/components";
 import { login } from "modules/auth/authSlice";
 import { LoginFormValues } from "modules/auth/types";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { routes } from "routes";
 import {
   emailValidator,
   passwordValidator,
@@ -18,7 +16,6 @@ const defaultValues: LoginFormValues = {
 };
 
 const LoginForm = () => {
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -31,7 +28,6 @@ const LoginForm = () => {
 
   const submitLogin = (formValues: LoginFormValues) => {
     dispatch(login(formValues));
-    navigate(routes.Base, { replace: true });
   };
 
   return (

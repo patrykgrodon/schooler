@@ -5,7 +5,11 @@ import routes from "./routePaths";
 const RestrictedRoutes = () => {
   const { user } = useAppSelector(({ auth }) => auth);
   const isRestricted = !user;
-  return isRestricted ? <Outlet /> : <Navigate to={routes.Base} replace />;
+  return isRestricted ? (
+    <Outlet />
+  ) : (
+    <Navigate to={routes.LessonPlan} replace />
+  );
 };
 
 export default RestrictedRoutes;
