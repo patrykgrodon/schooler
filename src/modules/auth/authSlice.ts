@@ -1,21 +1,39 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
+import { LoginFormValues } from "modules/components/LoginForm/LoginForm";
+import { sleep } from "utils/sleep";
 
 export type AuthState = {
   user: undefined | string;
+  isLoggingIn: boolean;
 };
 
 const initialState: AuthState = {
   user: undefined,
+  isLoggingIn: false,
 };
+
+export const login = createAsyncThunk(
+  "login",
+  async ({ email }: LoginFormValues) => {
+    await sleep(500);
+    return email;
+  }
+);
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    login(state) {
-      state.user = "user";
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(login.pending, (state) => {
+        state.isLoggingIn = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoggingIn = false;
+      });
   },
 });
 

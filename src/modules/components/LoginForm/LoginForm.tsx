@@ -1,22 +1,31 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { useAppDispatch } from "app/hooks";
-import Spinner from "common/components/Spinner/Spinner";
-import { authActions } from "modules/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { RequestButton } from "common/components";
+import { login } from "modules/auth/authSlice";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { routes } from "routes";
 
+const defaultValues = {
+  email: "",
+  password: "",
+};
+
+export type LoginFormValues = typeof defaultValues;
+
 const LoginForm = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<LoginFormValues>({
+    defaultValues,
+  });
+  const { isLoggingIn } = useAppSelector(({ auth }) => auth);
   const dispatch = useAppDispatch();
 
-  const submitLogin = () => {
-    dispatch(authActions.login());
+  const submitLogin = (formValues: LoginFormValues) => {
+    dispatch(login(formValues));
     navigate(routes.Base, { replace: true });
   };
 
-  if (!!"s") return <Spinner size="large" fullPage />;
   return (
     <Box
       component="form"
@@ -38,7 +47,9 @@ const LoginForm = () => {
         type="password"
         label="Hasło"
       />
-      <Button type="submit">Zaloguj się</Button>
+      <RequestButton type="submit" isLoading={isLoggingIn}>
+        Zaloguj się
+      </RequestButton>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button variant="text">Zarejestruj się</Button>
         <Button variant="text">Przypomnij hasło</Button>
