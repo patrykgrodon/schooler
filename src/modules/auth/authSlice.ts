@@ -3,8 +3,16 @@ import { RootState } from "app/store";
 import { sleep } from "utils/sleep";
 import { LoginFormValues } from "./types";
 
+type AccountType = "student" | "teacher" | "admin";
+
+export type User = {
+  id: number;
+  email: string;
+  accountType: AccountType;
+};
+
 export type AuthState = {
-  user: undefined | string;
+  user: User | undefined;
   isLoggingIn: boolean;
 };
 
@@ -17,14 +25,18 @@ export const login = createAsyncThunk(
   "login",
   async ({ email }: LoginFormValues) => {
     await sleep(500);
-    return email;
+    return { id: 1, email, accountType: "student" } as const;
   }
 );
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.user = undefined;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
