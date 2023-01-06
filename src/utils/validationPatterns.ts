@@ -14,7 +14,7 @@ export const validationPatterns = {
   email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
 };
 
-export const passwordPatternValidator = {
+export const passwordValidator = {
   value: validationPatterns.password,
   message: validationMessages.passwordPattern,
 };

@@ -6,6 +6,11 @@ import { LoginFormValues } from "modules/auth/types";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { routes } from "routes";
+import {
+  emailValidator,
+  passwordValidator,
+  validationMessages,
+} from "utils/validationPatterns";
 
 const defaultValues: LoginFormValues = {
   email: "",
@@ -14,7 +19,11 @@ const defaultValues: LoginFormValues = {
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<LoginFormValues>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormValues>({
     defaultValues,
   });
   const { isLoggingIn } = useAppSelector(({ auth }) => auth);
@@ -40,12 +49,26 @@ const LoginForm = () => {
         Logowanie
       </Typography>
       <TextField
-        {...register("email")}
+        {...register("email", {
+          required: validationMessages.required,
+          pattern: emailValidator,
+        })}
         type="email"
         size="small"
         label="E-mail"
+        error={!!errors.email}
+        helperText={errors.email?.message}
       />
-      <PasswordField {...register("password")} size="small" label="Hasło" />
+      <PasswordField
+        {...register("password", {
+          required: validationMessages.required,
+          pattern: passwordValidator,
+        })}
+        size="small"
+        label="Hasło"
+        error={!!errors.password}
+        helperText={errors.password?.message}
+      />
       <RequestButton type="submit" isLoading={isLoggingIn}>
         Zaloguj się
       </RequestButton>
