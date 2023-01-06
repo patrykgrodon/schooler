@@ -1,4 +1,4 @@
-import Login from "modules/pages/Login";
+import Login from "modules/auth/pages/Login";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PrivateRoutes from "./PrivateRoutes";
 import RestrictedRoutes from "./RestrictedRoutes";
