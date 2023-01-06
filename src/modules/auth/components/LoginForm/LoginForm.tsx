@@ -2,16 +2,15 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { RequestButton } from "common/components";
 import { login } from "modules/auth/authSlice";
+import { LoginFormValues } from "modules/auth/types";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { routes } from "routes";
 
-const defaultValues = {
+const defaultValues: LoginFormValues = {
   email: "",
   password: "",
 };
-
-export type LoginFormValues = typeof defaultValues;
 
 const LoginForm = () => {
   const navigate = useNavigate();

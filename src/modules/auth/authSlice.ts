@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
-import { LoginFormValues } from "modules/components/LoginForm/LoginForm";
 import { sleep } from "utils/sleep";
+import { LoginFormValues } from "./types";
 
 export type AuthState = {
   user: undefined | string;
