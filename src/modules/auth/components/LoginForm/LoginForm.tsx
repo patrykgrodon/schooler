@@ -1,6 +1,6 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { RequestButton } from "common/components";
+import { PasswordField, RequestButton } from "common/components";
 import { login } from "modules/auth/authSlice";
 import { LoginFormValues } from "modules/auth/types";
 import { useForm } from "react-hook-form";
@@ -40,12 +40,7 @@ const LoginForm = () => {
         Logowanie
       </Typography>
       <TextField {...register("email")} size="small" label="E-mail" />
-      <TextField
-        {...register("password")}
-        size="small"
-        type="password"
-        label="Hasło"
-      />
+      <PasswordField {...register("password")} size="small" label="Hasło" />
       <RequestButton type="submit" isLoading={isLoggingIn}>
         Zaloguj się
       </RequestButton>
