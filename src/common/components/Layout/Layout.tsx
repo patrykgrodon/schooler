@@ -12,9 +12,20 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <Header toggleSidebar={toggleSidebar} />
-      <Box sx={{ flex: 1, display: "flex" }}>
+      <Box
+        sx={{
+          display: "flex",
+          height: { xs: "calc( 100% - 58px)", sm: "calc( 100% - 64px)" },
+        }}>
         <Sidebar isOpen={isOpen} />
-        <Box component="main" sx={{ flex: 1 }}>
+        <Box
+          component="main"
+          sx={{
+            flex: 1,
+            height: "100%",
+            maxHeight: "100%",
+            overflow: "auto",
+          }}>
           {children}
         </Box>
       </Box>
