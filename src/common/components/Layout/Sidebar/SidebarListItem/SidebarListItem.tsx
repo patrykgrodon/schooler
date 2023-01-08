@@ -4,16 +4,34 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
+import routes from "routes/routePaths";
 
 type SidebarListItemProps = {
   text: string;
   Icon: React.ReactNode;
   isOpen: boolean;
+  path: typeof routes[keyof typeof routes];
 };
 
-const SidebarListItem = ({ text, Icon, isOpen }: SidebarListItemProps) => {
+const SidebarListItem = ({
+  text,
+  Icon,
+  isOpen,
+  path,
+}: SidebarListItemProps) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   return (
-    <ListItem key={text} disablePadding sx={{ display: "block" }}>
+    <ListItem
+      key={text}
+      onClick={() => navigate(path)}
+      disablePadding
+      sx={{
+        display: "block",
+        backgroundColor: (theme) =>
+          path === location.pathname ? theme.palette.action.hover : undefined,
+      }}>
       <ListItemButton
         sx={{
           minHeight: 48,
