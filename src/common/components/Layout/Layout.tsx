@@ -25,6 +25,7 @@ const Layout = ({ children }: LayoutProps) => {
             height: "100%",
             maxHeight: "100%",
             overflow: "auto",
+            p: 5,
           }}>
           {children}
         </Box>

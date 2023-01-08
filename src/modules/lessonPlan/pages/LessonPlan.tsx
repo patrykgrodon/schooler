@@ -99,14 +99,13 @@ const LessonPlan = () => {
       sx={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
         flexDirection: "column",
-        height: "90%",
+        m: "0 auto",
       }}>
-      <Typography variant="h2" component="h1" sx={{ mb: 2 }}>
+      <Typography variant="h3" component="h1" sx={{ mb: 1 }}>
         Plan lekcji klasa IV B
       </Typography>
-      <TableContainer sx={{ maxWidth: "1000px" }} component={Paper}>
+      <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
@@ -116,7 +115,7 @@ const LessonPlan = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {lessonStructure.map((el, i) => (
+            {lessonStructure.map((_, i) => (
               <TableRow key={i}>
                 <TableCell>{i + 1}</TableCell>
                 <TableCell>{lessonStructure[i] || "---"}</TableCell>

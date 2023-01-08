@@ -13,10 +13,9 @@ import {
 
 const Messages = () => {
   return (
-    <Paper
+    <Box
       sx={{
         height: "100%",
-        p: 5,
         overflow: "auto",
         display: "flex",
         rowGap: 1,
@@ -142,7 +141,7 @@ const Messages = () => {
           </Box>
         </Box>
       </Paper>
-    </Paper>
+    </Box>
   );
 };
 
