@@ -6,8 +6,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from "@mui/material";
+import { CenteredCell } from "common/components";
 import { getAllSubjects } from "modules/lessonPlan/utils";
 
 const headers = ["Przedmiot", "Obecności", "Nieobecnosci", "Spóźnienia"];
@@ -19,8 +19,10 @@ const AttendanceTable = () => {
         <Table>
           <TableHead>
             <TableRow>
-              {headers.map((header) => (
-                <TableCell key={header}>{header}</TableCell>
+              {headers.map((header, i) => (
+                <TableCell key={header} align={i === 0 ? "left" : "center"}>
+                  {header}
+                </TableCell>
               ))}
             </TableRow>
           </TableHead>
@@ -28,9 +30,9 @@ const AttendanceTable = () => {
             {getAllSubjects().map((subject) => (
               <TableRow key={subject}>
                 <TableCell>{subject}</TableCell>
-                <TableCell>3</TableCell>
-                <TableCell>1</TableCell>
-                <TableCell>0</TableCell>
+                <CenteredCell>3</CenteredCell>
+                <CenteredCell>1</CenteredCell>
+                <CenteredCell>0</CenteredCell>
               </TableRow>
             ))}
             <TableRow
@@ -38,12 +40,24 @@ const AttendanceTable = () => {
                 backgroundColor: (theme) => theme.palette.action.hover,
                 "& td": { border: "none" },
               }}>
-              {["Wszystkie", "21", "7", "0"].map((item) => (
-                <TableCell key={item}>
-                  <Typography variant="body1" fontWeight={700}>
-                    {item}
-                  </Typography>
-                </TableCell>
+              <TableCell
+                sx={{
+                  fontWeight: 700,
+                  fontSize: (theme) => theme.typography.body1.fontSize,
+                }}>
+                Wszystkie
+              </TableCell>
+              {["21", "7", "0"].map((item) => (
+                <CenteredCell
+                  key={item}
+                  tableCellProps={{
+                    sx: {
+                      fontWeight: 700,
+                      fontSize: (theme) => theme.typography.body1.fontSize,
+                    },
+                  }}>
+                  {item}
+                </CenteredCell>
               ))}
             </TableRow>
           </TableBody>

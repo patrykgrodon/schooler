@@ -7,10 +7,10 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { CenteredCell } from "common/components";
 import { calcAvg } from "modules/grades/utils/calcAvg";
 import { getAllSubjects } from "modules/lessonPlan/utils";
 import Grade from "../Grade/Grade";
-import CenteredCell from "./CenteredCell/CenteredCell";
 
 const headers = [
   "Przedmiot",
