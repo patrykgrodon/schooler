@@ -1,4 +1,5 @@
 import {
+  Box,
   Paper,
   Table,
   TableBody,
@@ -8,6 +9,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { lessonPlan } from "modules/lessonPlan/constants";
+import Grade from "../Grade/Grade";
 
 const headers = [
   "Przedmiot",
@@ -47,11 +49,33 @@ const GradesTable = () => {
             {getAllSubjects().map((subject) => (
               <TableRow key={subject}>
                 <TableCell>{subject}</TableCell>
-                <TableCell>4, 3, 2, 1</TableCell>
-                <TableCell>4, 3, 2, 1</TableCell>
-                <TableCell>2.5</TableCell>
-                <TableCell>2.5</TableCell>
-                <TableCell>2.5</TableCell>
+                <TableCell>
+                  <Box sx={{ display: "flex", columnGap: 1 }}>
+                    <Grade score={4} />
+                    <Grade score={3} />
+                    <Grade score={2} />
+                    <Grade score={1} />
+                  </Box>
+                </TableCell>
+                <TableCell>
+                  <Box sx={{ display: "flex", columnGap: 1 }}>
+                    <Grade score={6} />
+                    <Grade score={5} />
+                    <Grade score={4} />
+                    <Grade score={3} />
+                    <Grade score={2} />
+                    <Grade score={1} />
+                  </Box>
+                </TableCell>
+                <TableCell>
+                  <Grade score={2.5} />
+                </TableCell>
+                <TableCell>
+                  <Grade score={2} />
+                </TableCell>
+                <TableCell>
+                  <Grade score={3} />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
