@@ -2,17 +2,20 @@ import { Box, Tooltip, useTheme } from "@mui/material";
 
 type GradeProps = {
   score: number;
+  average?: boolean;
 };
 
-const Grade = ({ score }: GradeProps) => {
+const Grade = ({ score, average = false }: GradeProps) => {
   const theme = useTheme();
-  const scoreAsText = score % 1 === 0.5 ? `${Math.floor(score)}+` : score;
+  const scoreAsText = score % 1 === 0.5 ? `+${Math.floor(score)}` : score;
 
   const getBgColor = () => {
-    if (score <= 2) return theme.palette.error.main;
-    if (score > 2 && score < 4) return theme.palette.warning.dark;
-    if (score >= 4 && score < 6) return theme.palette.success.main;
-    if (score === 6) return theme.palette.warning.light;
+    if (score < 2) return theme.palette.error.main;
+    if (score >= 2 && score < 3) return theme.palette.warning.dark;
+    if (score >= 3 && score < 4) return theme.palette.warning.light;
+    if (score >= 4 && score < 5) return theme.palette.success.light;
+    if (score >= 4 && score < 6) return theme.palette.success.dark;
+    return "#ffd23f";
   };
   const getTooltipTitle = () => {
     switch (score) {
@@ -57,7 +60,7 @@ const Grade = ({ score }: GradeProps) => {
           alignItems: "center",
           color: "#fff",
         }}>
-        {scoreAsText}
+        {average ? score : scoreAsText}
       </Box>
     </Tooltip>
   );

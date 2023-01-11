@@ -1,5 +1,4 @@
 import {
-  Box,
   Paper,
   Table,
   TableBody,
@@ -8,8 +7,10 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { calcAvg } from "modules/grades/utils/calcAvg";
 import { lessonPlan } from "modules/lessonPlan/constants";
 import Grade from "../Grade/Grade";
+import CenteredCell from "./CenteredCell/CenteredCell";
 
 const headers = [
   "Przedmiot",
@@ -33,15 +34,20 @@ const getAllSubjects = () => {
   return subjects;
 };
 
+const firstSemesterGrades = [4, 3, 2, 1];
+const secondSemesterGrades = [6, 5.5, 5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1];
+
 const GradesTable = () => {
   return (
-    <TableContainer>
-      <Paper>
+    <Paper sx={{ overflow: "hidden" }}>
+      <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
-              {headers.map((header) => (
-                <TableCell key={header}>{header}</TableCell>
+              {headers.map((header, i) => (
+                <TableCell key={header} align={i === 0 ? "left" : "center"}>
+                  {header}
+                </TableCell>
               ))}
             </TableRow>
           </TableHead>
@@ -49,39 +55,36 @@ const GradesTable = () => {
             {getAllSubjects().map((subject) => (
               <TableRow key={subject}>
                 <TableCell>{subject}</TableCell>
-                <TableCell>
-                  <Box sx={{ display: "flex", columnGap: 1 }}>
-                    <Grade score={4} />
-                    <Grade score={3} />
-                    <Grade score={2} />
-                    <Grade score={1} />
-                  </Box>
-                </TableCell>
-                <TableCell>
-                  <Box sx={{ display: "flex", columnGap: 1 }}>
-                    <Grade score={6} />
-                    <Grade score={5} />
-                    <Grade score={4} />
-                    <Grade score={3} />
-                    <Grade score={2} />
-                    <Grade score={1} />
-                  </Box>
-                </TableCell>
-                <TableCell>
-                  <Grade score={2.5} />
-                </TableCell>
-                <TableCell>
+                <CenteredCell boxProps={{ sx: { columnGap: 1 } }}>
+                  {firstSemesterGrades.map((score, i) => (
+                    <Grade score={score} key={i} />
+                  ))}
+                </CenteredCell>
+                <CenteredCell boxProps={{ sx: { columnGap: 1 } }}>
+                  {secondSemesterGrades.map((score, i) => (
+                    <Grade score={score} key={i} />
+                  ))}
+                </CenteredCell>
+                <CenteredCell tableCellProps={{ sx: { width: "140px" } }}>
+                  <Grade
+                    score={calcAvg(
+                      firstSemesterGrades.concat(secondSemesterGrades)
+                    )}
+                    average
+                  />
+                </CenteredCell>
+                <CenteredCell tableCellProps={{ sx: { width: "140px" } }}>
                   <Grade score={2} />
-                </TableCell>
-                <TableCell>
+                </CenteredCell>
+                <CenteredCell tableCellProps={{ sx: { width: "140px" } }}>
                   <Grade score={3} />
-                </TableCell>
+                </CenteredCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      </Paper>
-    </TableContainer>
+      </TableContainer>
+    </Paper>
   );
 };
 
