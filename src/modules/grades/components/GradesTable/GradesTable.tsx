@@ -40,7 +40,13 @@ const GradesTable = () => {
           </TableHead>
           <TableBody>
             {getAllSubjects().map((subject) => (
-              <TableRow key={subject}>
+              <TableRow
+                key={subject}
+                sx={{
+                  "&:last-child td": {
+                    border: "none",
+                  },
+                }}>
                 <TableCell>{subject}</TableCell>
                 <CenteredCell boxProps={{ sx: { columnGap: 1 } }}>
                   {firstSemesterGrades.map((score, i) => (

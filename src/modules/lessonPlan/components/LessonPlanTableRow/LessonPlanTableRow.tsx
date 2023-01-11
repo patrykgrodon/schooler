@@ -7,7 +7,12 @@ type LessonPlanTableRowProps = {
 
 const LessonPlanTableRow = ({ index }: LessonPlanTableRowProps) => {
   return (
-    <TableRow>
+    <TableRow
+      sx={{
+        "&:last-child td": {
+          border: "none",
+        },
+      }}>
       <TableCell>{index + 1}</TableCell>
       <TableCell>{lessonStructure[index] || "---"}</TableCell>
       <TableCell>{lessonPlan.monday[index] || "---"}</TableCell>
