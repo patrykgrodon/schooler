@@ -1,5 +1,6 @@
 import { Menu } from "@mui/icons-material";
-import { AppBar, Avatar, IconButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, Avatar, Box, IconButton, Toolbar } from "@mui/material";
+import Logo from "common/components/Logo/Logo";
 
 type HeaderProps = {
   toggleSidebar: () => void;
@@ -18,9 +19,9 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
           onClick={toggleSidebar}>
           <Menu />
         </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Schooler
-        </Typography>
+        <Box sx={{ flexGrow: 1 }}>
+          <Logo />
+        </Box>
         <IconButton>
           <Avatar>P</Avatar>
         </IconButton>

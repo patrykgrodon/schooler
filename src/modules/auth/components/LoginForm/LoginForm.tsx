@@ -40,7 +40,7 @@ const LoginForm = () => {
         display: "flex",
         flexDirection: "column",
         rowGap: 3,
-        width: "320px",
+        width: "430px",
         maxWidth: "95%",
       }}>
       <Typography variant="h3" component="h1">
