@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { calcAvg } from "modules/grades/utils/calcAvg";
-import { lessonPlan } from "modules/lessonPlan/constants";
+import { getAllSubjects } from "modules/lessonPlan/utils";
 import Grade from "../Grade/Grade";
 import CenteredCell from "./CenteredCell/CenteredCell";
 
@@ -20,19 +20,6 @@ const headers = [
   "Ocena śródroczna",
   "Ocena końcowa",
 ];
-
-const getAllSubjects = () => {
-  const keys = Object.keys(lessonPlan) as (keyof typeof lessonPlan)[];
-  const subjects: string[] = [];
-  keys.forEach((key) => {
-    lessonPlan[key].forEach((subject) => {
-      if (subjects.includes(subject) || subject === "") return;
-      subjects.push(subject);
-    });
-  });
-
-  return subjects.sort((a, b) => a.localeCompare(b));
-};
 
 const firstSemesterGrades = [4, 3, 2, 1];
 const secondSemesterGrades = [6, 5.5, 5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1];

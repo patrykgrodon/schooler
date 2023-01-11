@@ -1,3 +1,4 @@
+import Attendance from "modules/attendance/pages/Attendance";
 import Login from "modules/auth/pages/Login";
 import Grades from "modules/grades/pages/Grades";
 import LessonPlan from "modules/lessonPlan/pages/LessonPlan";
@@ -14,7 +15,7 @@ const Router = () => {
         <Route element={<PrivateRoutes />}>
           <Route path={routes.LessonPlan} element={<LessonPlan />} />
           <Route path={routes.Grades} element={<Grades />} />
-          <Route path={routes.Attendance} element={<div>Obecności</div>} />
+          <Route path={routes.Attendance} element={<Attendance />} />
           <Route path={routes.Messages} element={<Messages />} />
         </Route>
         <Route element={<RestrictedRoutes />}>
