@@ -1,9 +1,11 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, TextField, Typography, Link as MuiLink } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { PasswordField, RequestButton } from "common/components";
 import { login } from "modules/auth/authSlice";
 import { LoginFormValues } from "modules/auth/types";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import routes from "routes/routePaths";
 import {
   emailValidator,
   passwordValidator,
@@ -69,8 +71,12 @@ const LoginForm = () => {
         Zaloguj się
       </RequestButton>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Button variant="text">Zarejestruj się</Button>
-        <Button variant="text">Przypomnij hasło</Button>
+        <MuiLink component={Link} to={routes.Register}>
+          Zarejestruj się
+        </MuiLink>
+        <MuiLink component={Link} to={routes.RemindPassword}>
+          Przypomnij hasło
+        </MuiLink>
       </Box>
     </Box>
   );
