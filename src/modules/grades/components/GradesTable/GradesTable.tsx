@@ -31,7 +31,7 @@ const getAllSubjects = () => {
     });
   });
 
-  return subjects;
+  return subjects.sort((a, b) => a.localeCompare(b));
 };
 
 const firstSemesterGrades = [4, 3, 2, 1];
