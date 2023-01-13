@@ -1,4 +1,4 @@
-import { TextField, Link as MuiLink } from "@mui/material";
+import { TextField } from "@mui/material";
 import { useAppDispatch } from "app/hooks";
 import { PasswordField, RequestButton } from "common/components";
 import { RegisterFormValues } from "modules/auth/types";
@@ -13,8 +13,7 @@ import {
   validationMessages,
 } from "utils/validationPatterns";
 import FormContainer from "../FormContainer/FormContainer";
-import { Link } from "react-router-dom";
-import routes from "routes/routePaths";
+import ReturnToLoginLink from "../ReturnToLoginLink/ReturnToLoginLink";
 
 const defaultValues: RegisterFormValues = {
   email: "",
@@ -87,9 +86,8 @@ const RegisterForm = () => {
       <RequestButton type="submit" isLoading={false}>
         Utwórz konto
       </RequestButton>
-      <MuiLink component={Link} to={routes.Login}>
-        Wróć do ekranu logowania
-      </MuiLink>
+
+      <ReturnToLoginLink />
     </FormContainer>
   );
 };

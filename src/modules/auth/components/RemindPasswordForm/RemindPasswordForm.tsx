@@ -1,11 +1,11 @@
-import { TextField, Link as MuiLink } from "@mui/material";
+import { TextField } from "@mui/material";
 import { RequestButton } from "common/components";
 import { RemindPasswordFormValues } from "modules/auth/types";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import routes from "routes/routePaths";
+
 import { validationMessages, emailValidator } from "utils/validationPatterns";
 import FormContainer from "../FormContainer/FormContainer";
+import ReturnToLoginLink from "../ReturnToLoginLink/ReturnToLoginLink";
 
 const defaultValues: RemindPasswordFormValues = {
   email: "",
@@ -36,9 +36,7 @@ const RemindPasswordForm = () => {
         helperText={errors.email?.message}
       />
       <RequestButton>Wyślij</RequestButton>
-      <MuiLink component={Link} to={routes.Login}>
-        Wróc do ekranu logowania
-      </MuiLink>
+      <ReturnToLoginLink />
     </FormContainer>
   );
 };
