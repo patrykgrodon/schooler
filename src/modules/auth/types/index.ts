@@ -9,3 +9,7 @@ export type RegisterFormValues = {
   password: string;
   confirmPassword: string;
 };
+
+export type RemindPasswordFormValues = {
+  email: string;
+};

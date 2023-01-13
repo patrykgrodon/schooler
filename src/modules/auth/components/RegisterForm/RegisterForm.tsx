@@ -29,7 +29,7 @@ const RegisterForm = () => {
     register,
     formState: { errors },
     watch,
-  } = useForm({ defaultValues });
+  } = useForm<RegisterFormValues>({ defaultValues });
   const dispatch = useAppDispatch();
 
   const submitRegister = (formValues: RegisterFormValues) => {
