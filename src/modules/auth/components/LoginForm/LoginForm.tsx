@@ -1,4 +1,4 @@
-import { Box, TextField, Typography, Link as MuiLink } from "@mui/material";
+import { Box, TextField, Link as MuiLink } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { PasswordField, RequestButton } from "common/components";
 import { login } from "modules/auth/authSlice";
@@ -34,10 +34,7 @@ const LoginForm = () => {
   };
 
   return (
-    <FormContainer onSubmit={handleSubmit(submitLogin)}>
-      <Typography variant="h3" component="h1">
-        Logowanie
-      </Typography>
+    <FormContainer onSubmit={handleSubmit(submitLogin)} title="Logowanie">
       <TextField
         {...register("email", {
           required: validationMessages.required,

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
 import { sleep } from "utils/sleep";
-import { LoginFormValues } from "./types";
+import { LoginFormValues, RegisterFormValues } from "./types";
 
 type AccountType = "student" | "teacher" | "admin";
 
@@ -26,6 +26,13 @@ export const login = createAsyncThunk(
   async ({ email }: LoginFormValues) => {
     await sleep(500);
     return { id: 1, email, accountType: "student" } as const;
+  }
+);
+export const createAdminAccount = createAsyncThunk(
+  "createAdminAccount",
+  async (formValues: RegisterFormValues) => {
+    await sleep(500);
+    return formValues;
   }
 );
 
