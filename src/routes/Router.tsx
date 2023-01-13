@@ -1,5 +1,5 @@
 import Attendance from "modules/attendance/pages/Attendance";
-import Login from "modules/auth/pages/Login";
+import { LoginForm, RegisterForm } from "modules/auth/components";
 import Grades from "modules/grades/pages/Grades";
 import LessonPlan from "modules/lessonPlan/pages/LessonPlan";
 import Messages from "modules/messages/pages/Messages";
@@ -19,8 +19,8 @@ const Router = () => {
           <Route path={routes.Messages} element={<Messages />} />
         </Route>
         <Route element={<RestrictedRoutes />}>
-          <Route path={routes.Login} element={<Login />} />
-          <Route path={routes.Register} element={<div>register page</div>} />
+          <Route path={routes.Login} element={<LoginForm />} />
+          <Route path={routes.Register} element={<RegisterForm />} />
           <Route
             path={routes.RemindPassword}
             element={<div>remind password page</div>}

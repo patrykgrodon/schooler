@@ -11,6 +11,7 @@ import {
   passwordValidator,
   validationMessages,
 } from "utils/validationPatterns";
+import FormContainer from "../FormContainer/FormContainer";
 
 const defaultValues: LoginFormValues = {
   email: "",
@@ -33,16 +34,7 @@ const LoginForm = () => {
   };
 
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit(submitLogin)}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        rowGap: 3,
-        width: "430px",
-        maxWidth: "95%",
-      }}>
+    <FormContainer onSubmit={handleSubmit(submitLogin)}>
       <Typography variant="h3" component="h1">
         Logowanie
       </Typography>
@@ -78,7 +70,7 @@ const LoginForm = () => {
           Przypomnij hasło
         </MuiLink>
       </Box>
-    </Box>
+    </FormContainer>
   );
 };
 
