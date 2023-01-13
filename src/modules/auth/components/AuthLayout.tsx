@@ -13,7 +13,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
         display: "flex",
         height: "100%",
         flexDirection: "column",
-        mx: 15,
+        mx: { xs: 2, md: 6, lg: 15 },
       }}>
       <Box sx={{ height: "64px", display: "flex", alignItems: "center" }}>
         <Logo />
@@ -23,8 +23,9 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
           display: "flex",
           flexDirection: { xs: "column", lg: "row" },
           flex: 1,
-          justifyContent: { xs: "center", lg: "space-between" },
+          justifyContent: { xs: "center", lg: "space-evenly" },
           alignItems: "center",
+          columnGap: 12,
         }}>
         <Box
           component={EducationIllustration}
@@ -37,7 +38,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
             flexShrink: 1,
           }}
         />
-        <Box sx={{ my: { xs: 5, lg: 0 } }}>{children}</Box>
+        {children}
       </Box>
     </Box>
   );
