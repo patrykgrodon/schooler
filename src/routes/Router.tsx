@@ -1,5 +1,9 @@
 import Attendance from "modules/attendance/pages/Attendance";
-import { LoginForm, RegisterForm } from "modules/auth/components";
+import {
+  LoginForm,
+  RegisterForm,
+  RemindPasswordForm,
+} from "modules/auth/components";
 import Grades from "modules/grades/pages/Grades";
 import LessonPlan from "modules/lessonPlan/pages/LessonPlan";
 import Messages from "modules/messages/pages/Messages";
@@ -23,7 +27,7 @@ const Router = () => {
           <Route path={routes.Register} element={<RegisterForm />} />
           <Route
             path={routes.RemindPassword}
-            element={<div>remind password page</div>}
+            element={<RemindPasswordForm />}
           />
         </Route>
         <Route path="*" element={<Navigate replace to={routes.Login} />} />
