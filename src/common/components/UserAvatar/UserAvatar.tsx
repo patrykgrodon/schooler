@@ -7,7 +7,7 @@ type UserAvatarProps = {
   size?: "small" | "medium" | "large";
 };
 
-const sizes = {
+export const userAvatarSizes = {
   small: 30,
   medium: 40,
   large: 50,
@@ -19,11 +19,14 @@ const UserAvatar = ({
   sx,
   size = "medium",
 }: UserAvatarProps) => {
-  const width = sizes[size];
-  const height = sizes[size];
+  const width = userAvatarSizes[size];
+  const height = userAvatarSizes[size];
 
   return (
-    <Avatar src={url} sx={{ width, height, ...sx }}>
+    <Avatar
+      src={url}
+      sx={{ width, height, ...sx }}
+      aria-label="awatar użytkownika">
       {userInitials}
     </Avatar>
   );
