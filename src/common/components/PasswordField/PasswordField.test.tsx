@@ -1,5 +1,4 @@
-import { act, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { act, render, screen, userEvent } from "test-utils";
 import PasswordField from "./PasswordField";
 
 describe("<PasswordField />", () => {

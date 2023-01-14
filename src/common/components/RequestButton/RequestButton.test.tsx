@@ -1,27 +1,18 @@
-import { render, screen } from "@testing-library/react";
-import MuiThemeProviders from "common/providers/MuiThemeProviders";
+import { render, screen } from "test-utils";
 import RequestButton from "./RequestButton";
 
 describe("<RequestButton />", () => {
   const buttonText = "Utwórz";
 
   it("should render passed in children", () => {
-    render(
-      <MuiThemeProviders>
-        <RequestButton>{buttonText}</RequestButton>
-      </MuiThemeProviders>
-    );
+    render(<RequestButton>{buttonText}</RequestButton>);
     const button = screen.getByRole("button", { name: buttonText });
 
     expect(button).toBeInTheDocument();
   });
 
   it("should render loading spinner on loading and disable button", () => {
-    render(
-      <MuiThemeProviders>
-        <RequestButton isLoading={true}>{buttonText}</RequestButton>
-      </MuiThemeProviders>
-    );
+    render(<RequestButton isLoading={true}>{buttonText}</RequestButton>);
     const buttonWithText = screen.queryByRole("button", { name: buttonText });
 
     expect(buttonWithText).not.toBeInTheDocument();
