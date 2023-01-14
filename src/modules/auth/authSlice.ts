@@ -3,7 +3,7 @@ import { RootState } from "app/store";
 import { sleep } from "utils/sleep";
 import { LoginFormValues, RegisterFormValues } from "./types";
 
-type AccountType = "student" | "teacher" | "admin";
+export type AccountType = "student" | "teacher" | "admin";
 
 export type User = {
   id: number;
