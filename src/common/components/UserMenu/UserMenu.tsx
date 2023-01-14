@@ -7,13 +7,14 @@ import {
   Menu,
   Typography,
 } from "@mui/material";
-import { useAppDispatch } from "app/hooks";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import useMenu from "common/hooks/useMenu";
 import { authActions } from "modules/auth/authSlice";
 import UserAvatar from "../UserAvatar/UserAvatar";
 
 const UserMenu = () => {
   const { menuEl, openMenu, closeMenu } = useMenu();
+  const user = useAppSelector(({ auth }) => auth.user!);
   const dispatch = useAppDispatch();
 
   const handleOpenMenu: React.MouseEventHandler<HTMLButtonElement> = (e) =>
@@ -49,7 +50,13 @@ const UserMenu = () => {
             sx={{ fontWeight: 700, lineHeight: 1 }}>
             Patryk Testowy
           </Typography>
-          <Typography variant="caption">Klasa IV B</Typography>
+          <Typography variant="caption">
+            {user.accountType === "student"
+              ? "Uczeń"
+              : user.accountType === "admin"
+              ? "Administrator"
+              : "Nauczyciel"}
+          </Typography>
         </ListItem>
         <Divider />
         {listItemActions.map(({ text, onClick, Icon }) => (
