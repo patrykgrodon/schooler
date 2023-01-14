@@ -4,6 +4,7 @@ import PasswordField from "./PasswordField/PasswordField";
 import RequestButton from "./RequestButton/RequestButton";
 import Spinner from "./Spinner/Spinner";
 import UserAvatar from "./UserAvatar/UserAvatar";
+import UserMenu from "./UserMenu/UserMenu";
 
 export {
   CenteredCell,
@@ -12,4 +13,5 @@ export {
   RequestButton,
   Spinner,
   UserAvatar,
+  UserMenu,
 };
