@@ -29,11 +29,11 @@ const sidebarStudentItems = [
 ];
 
 const adminSidebarItems = [
+  { label: "Klasy", Icon: ClassOutlined, path: routes.Classes },
+  { label: "Uczniowie", Icon: SchoolOutlined, path: routes.Students },
+  { label: "Przedmioty", Icon: TopicOutlined, path: routes.Subjects },
+  { label: "Nauczyciele", Icon: WorkOutlined, path: routes.Teachers },
   messageItem,
-  { label: "Klasy", Icon: ClassOutlined, path: routes.Attendance },
-  { label: "Uczniowie", Icon: SchoolOutlined, path: routes.Attendance },
-  { label: "Przedmioty", Icon: TopicOutlined, path: routes.Attendance },
-  { label: "Nauczyciele", Icon: WorkOutlined, path: routes.Attendance },
 ];
 
 const sidebarItems: Record<AccountType, typeof sidebarStudentItems> = {

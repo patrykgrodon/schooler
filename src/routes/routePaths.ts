@@ -7,6 +7,10 @@ const routes = {
   Grades: "/grades",
   Attendance: "/attendance",
   Messages: "/messages",
+  Classes: "/classes",
+  Students: "/students",
+  Subjects: "/subjects",
+  Teachers: "/teachers",
 };
 
 export default routes;
