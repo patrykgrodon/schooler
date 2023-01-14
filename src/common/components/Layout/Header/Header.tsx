@@ -1,6 +1,7 @@
 import { Menu } from "@mui/icons-material";
-import { AppBar, Avatar, Box, IconButton, Toolbar } from "@mui/material";
+import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
 import Logo from "common/components/Logo/Logo";
+import { UserAvatar } from "common/components";
 
 type HeaderProps = {
   toggleSidebar: () => void;
@@ -23,7 +24,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
           <Logo />
         </Box>
         <IconButton>
-          <Avatar>P</Avatar>
+          <UserAvatar userInitials="PT" />
         </IconButton>
       </Toolbar>
     </AppBar>

@@ -3,5 +3,13 @@ import Logo from "./Logo/Logo";
 import PasswordField from "./PasswordField/PasswordField";
 import RequestButton from "./RequestButton/RequestButton";
 import Spinner from "./Spinner/Spinner";
+import UserAvatar from "./UserAvatar/UserAvatar";
 
-export { CenteredCell, Logo, PasswordField, RequestButton, Spinner };
+export {
+  CenteredCell,
+  Logo,
+  PasswordField,
+  RequestButton,
+  Spinner,
+  UserAvatar,
+};
