@@ -4,6 +4,7 @@ import {
   RegisterForm,
   RemindPasswordForm,
 } from "modules/auth/components";
+import Classes from "modules/classes/pages/Classes";
 import Grades from "modules/grades/pages/Grades";
 import LessonPlan from "modules/lessonPlan/pages/LessonPlan";
 import Messages from "modules/messages/pages/Messages";
@@ -21,7 +22,7 @@ const Router = () => {
           <Route path={routes.Grades} element={<Grades />} />
           <Route path={routes.Attendance} element={<Attendance />} />
           <Route path={routes.Messages} element={<Messages />} />
-          <Route path={routes.Classes} element={<div>Klasy</div>} />
+          <Route path={routes.Classes} element={<Classes />} />
           <Route path={routes.Students} element={<div>Uczniowie</div>} />
           <Route path={routes.Subjects} element={<div>Przedmioty</div>} />
           <Route path={routes.Teachers} element={<div>Nauczyciele</div>} />
