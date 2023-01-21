@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
-import { Header, MessagesInbox } from "../components";
+import { PageHeader } from "common/components";
+import { MessagesInbox } from "../components";
 
 const Messages = () => {
   return (
@@ -11,7 +12,11 @@ const Messages = () => {
         rowGap: 1,
         flexDirection: "column",
       }}>
-      <Header />
+      <PageHeader
+        onClick={() => {}}
+        textButton="Napisz wiadomość"
+        textHeader="Wiadomości"
+      />
       <MessagesInbox />
     </Box>
   );

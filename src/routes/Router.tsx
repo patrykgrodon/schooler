@@ -8,6 +8,7 @@ import Classes from "modules/classes/pages/Classes";
 import Grades from "modules/grades/pages/Grades";
 import LessonPlan from "modules/lessonPlan/pages/LessonPlan";
 import Messages from "modules/messages/pages/Messages";
+import Students from "modules/students/pages/Students";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import PrivateRoutes from "./PrivateRoutes";
 import RestrictedRoutes from "./RestrictedRoutes";
@@ -23,7 +24,7 @@ const Router = () => {
           <Route path={routes.Attendance} element={<Attendance />} />
           <Route path={routes.Messages} element={<Messages />} />
           <Route path={routes.Classes} element={<Classes />} />
-          <Route path={routes.Students} element={<div>Uczniowie</div>} />
+          <Route path={routes.Students} element={<Students />} />
           <Route path={routes.Subjects} element={<div>Przedmioty</div>} />
           <Route path={routes.Teachers} element={<div>Nauczyciele</div>} />
         </Route>

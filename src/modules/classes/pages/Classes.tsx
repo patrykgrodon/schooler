@@ -1,11 +1,15 @@
 import { Box } from "@mui/material";
+import { PageHeader } from "common/components";
 import ClassesTable from "../components/ClassesTable";
-import Header from "../components/Header/Header";
 
 const Classes = () => {
   return (
     <Box>
-      <Header />
+      <PageHeader
+        onClick={() => {}}
+        textButton="Dodaj klasę"
+        textHeader="Klasy"
+      />
       <ClassesTable />
     </Box>
   );
