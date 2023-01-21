@@ -22,10 +22,14 @@ const SidebarListItem = ({
 }: SidebarListItemProps) => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const handleNavigate = () => navigate(path);
+
   return (
     <ListItem
       key={text}
-      onClick={() => navigate(path)}
+      onClick={handleNavigate}
+      onKeyDown={(e: any) => e.keyCode === 13 && handleNavigate()}
       disablePadding
       sx={{
         display: "block",
