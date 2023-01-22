@@ -1,12 +1,8 @@
 import { Autocomplete, Grid, TextField } from "@mui/material";
 import { RequestButton } from "common/components";
+import { ClassFormValues } from "modules/classes/types";
 import { useForm } from "react-hook-form";
 import { validationMessages } from "utils/validationPatterns";
-
-export type ClassFormValues = {
-  name: string;
-  classTeacher: string;
-};
 
 const defaultValues: ClassFormValues = {
   name: "",
