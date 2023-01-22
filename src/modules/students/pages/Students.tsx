@@ -1,8 +1,7 @@
 import { Box } from "@mui/material";
-import { PageHeader } from "common/components";
+import { FormDialog, PageHeader } from "common/components";
 import useModal from "common/hooks/useModal";
-import StudentFormDialog from "../components/StudentFormDialog/StudentFormDialog";
-import StudentsTable from "../components/StudentsTable/StudentsTable";
+import { StudentForm, StudentsTable } from "../components";
 
 const Students = () => {
   const { isOpen, closeModal, openModal } = useModal();
@@ -14,7 +13,9 @@ const Students = () => {
         textHeader="Uczniowie"
       />
       <StudentsTable />
-      <StudentFormDialog isOpen={isOpen} handleClose={closeModal} />
+      <FormDialog isOpen={isOpen} handleClose={closeModal} title="Dodaj ucznia">
+        <StudentForm />
+      </FormDialog>
     </Box>
   );
 };

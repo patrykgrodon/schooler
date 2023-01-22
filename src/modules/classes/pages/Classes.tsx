@@ -1,8 +1,7 @@
 import { Box } from "@mui/material";
-import { PageHeader } from "common/components";
+import { FormDialog, PageHeader } from "common/components";
 import useModal from "common/hooks/useModal";
-import ClassesTable from "../components/ClassesTable/ClassesTable";
-import ClassFormDialog from "../components/ClassFormDialog/ClassFormDialog";
+import { ClassForm, ClassesTable } from "../components";
 
 const Classes = () => {
   const { isOpen, closeModal, openModal } = useModal();
@@ -14,7 +13,9 @@ const Classes = () => {
         textHeader="Klasy"
       />
       <ClassesTable />
-      <ClassFormDialog isOpen={isOpen} handleClose={closeModal} />
+      <FormDialog isOpen={isOpen} handleClose={closeModal} title="Dodaj klasę">
+        <ClassForm />
+      </FormDialog>
     </Box>
   );
 };
