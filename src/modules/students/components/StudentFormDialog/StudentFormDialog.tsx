@@ -1,11 +1,5 @@
-import { CloseOutlined } from "@mui/icons-material";
-import {
-  Box,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-} from "@mui/material";
+import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { CloseButton } from "common/components";
 import StudentForm from "../StudentForm/StudentForm";
 
 type StudentFormDialogProps = {
@@ -17,11 +11,7 @@ const StudentFormDialog = ({ isOpen, handleClose }: StudentFormDialogProps) => {
   return (
     <Dialog open={isOpen} onClose={handleClose}>
       <DialogTitle>Dodaj ucznia</DialogTitle>
-      <IconButton
-        onClick={handleClose}
-        sx={{ position: "absolute", top: 10, right: 10 }}>
-        <CloseOutlined />
-      </IconButton>
+      <CloseButton onClick={handleClose} />
       <DialogContent sx={{ pt: 0 }}>
         <Box sx={{ pt: 1 }}>
           <StudentForm />

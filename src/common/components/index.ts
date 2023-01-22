@@ -1,4 +1,5 @@
 import CenteredCell from "./CenteredCell/CenteredCell";
+import CloseButton from "./dialogs/CloseButton/CloseButton";
 import Logo from "./Logo/Logo";
 import PasswordField from "./PasswordField/PasswordField";
 import PageHeader from "./PageHeader/PageHeader";
@@ -9,6 +10,7 @@ import UserMenu from "./UserMenu/UserMenu";
 
 export {
   CenteredCell,
+  CloseButton,
   Logo,
   PasswordField,
   PageHeader,
