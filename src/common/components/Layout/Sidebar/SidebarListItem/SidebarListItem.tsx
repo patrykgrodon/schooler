@@ -5,13 +5,13 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import routes from "routes/routePaths";
+import { RouteValue } from "routes/routePaths";
 
 type SidebarListItemProps = {
   text: string;
   Icon: React.ReactNode;
   isOpen: boolean;
-  path: typeof routes[keyof typeof routes];
+  path: RouteValue;
 };
 
 const SidebarListItem = ({

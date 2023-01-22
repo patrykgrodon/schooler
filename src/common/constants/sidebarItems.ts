@@ -9,16 +9,47 @@ import {
   WorkOutlined,
 } from "@mui/icons-material";
 import { AccountType } from "modules/auth/authSlice";
-import routes from "routes/routePaths";
+import routes, { RouteValue } from "routes/routePaths";
 
-const messageItem = {
+export type SidebarItem = {
+  label: string;
+  Icon: React.ElementType;
+  path: RouteValue;
+};
+
+const messageItem: SidebarItem = {
   label: "Wiadomości",
   Icon: MessageOutlined,
   path: routes.Messages,
 };
 
-const sidebarStudentItems = [
-  { label: "Plan lekcji", Icon: CalendarMonth, path: routes.LessonPlan },
+const lessonPlanItem: SidebarItem = {
+  label: "Plan lekcji",
+  Icon: CalendarMonth,
+  path: routes.LessonPlan,
+};
+const classesItem: SidebarItem = {
+  label: "Klasy",
+  Icon: ClassOutlined,
+  path: routes.Classes,
+};
+
+const adminSidebarItems: SidebarItem[] = [
+  classesItem,
+  { label: "Uczniowie", Icon: SchoolOutlined, path: routes.Students },
+  { label: "Przedmioty", Icon: TopicOutlined, path: routes.Subjects },
+  { label: "Nauczyciele", Icon: WorkOutlined, path: routes.Teachers },
+  messageItem,
+];
+
+const teacherSidebarItems: SidebarItem[] = [
+  lessonPlanItem,
+  classesItem,
+  messageItem,
+];
+
+const studentSidebarItems: SidebarItem[] = [
+  lessonPlanItem,
   { label: "Oceny", Icon: GradeOutlined, path: routes.Grades },
   {
     label: "Obecności",
@@ -28,18 +59,10 @@ const sidebarStudentItems = [
   messageItem,
 ];
 
-const adminSidebarItems = [
-  { label: "Klasy", Icon: ClassOutlined, path: routes.Classes },
-  { label: "Uczniowie", Icon: SchoolOutlined, path: routes.Students },
-  { label: "Przedmioty", Icon: TopicOutlined, path: routes.Subjects },
-  { label: "Nauczyciele", Icon: WorkOutlined, path: routes.Teachers },
-  messageItem,
-];
-
-const sidebarItems: Record<AccountType, typeof sidebarStudentItems> = {
+const sidebarItems: Record<AccountType, SidebarItem[]> = {
   admin: adminSidebarItems,
-  student: sidebarStudentItems,
-  teacher: sidebarStudentItems,
+  teacher: teacherSidebarItems,
+  student: studentSidebarItems,
 };
 
 export default sidebarItems;
