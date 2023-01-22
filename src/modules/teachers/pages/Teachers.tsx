@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { PageHeader } from "common/components";
-import TeachersTable from "../components/TeachersTable";
+import TeachersTable from "../components/TeachersTable/TeachersTable";
 
 const Teachers = () => {
   return (

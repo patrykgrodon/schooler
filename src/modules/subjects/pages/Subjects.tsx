@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { PageHeader } from "common/components";
-import SubjectsTable from "../components/SubjectsTable";
+import SubjectsTable from "../components/SubjectsTable/SubjectsTable";
 
 const Subjects = () => {
   return (
