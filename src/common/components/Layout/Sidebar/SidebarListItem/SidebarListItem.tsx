@@ -4,18 +4,13 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
+import { SidebarItem } from "common/constants/sidebarItems";
 import { useLocation, useNavigate } from "react-router-dom";
-import { RouteValue } from "routes/routePaths";
 
-type SidebarListItemProps = {
-  text: string;
-  Icon: React.ReactNode;
-  isOpen: boolean;
-  path: RouteValue;
-};
+type SidebarListItemProps = SidebarItem & { isOpen: boolean };
 
 const SidebarListItem = ({
-  text,
+  label,
   Icon,
   isOpen,
   path,
@@ -27,7 +22,7 @@ const SidebarListItem = ({
 
   return (
     <ListItem
-      key={text}
+      key={label}
       onClick={handleNavigate}
       onKeyDown={(e: any) => e.keyCode === 13 && handleNavigate()}
       disablePadding
@@ -48,10 +43,10 @@ const SidebarListItem = ({
             mr: isOpen ? 3 : "auto",
             justifyContent: "center",
           }}>
-          {Icon}
+          <Icon />
         </ListItemIcon>
         <ListItemText
-          primary={text}
+          primary={label}
           primaryTypographyProps={{ variant: "subtitle1" }}
           sx={{ opacity: isOpen ? 1 : 0, fontWeight: 700 }}
         />

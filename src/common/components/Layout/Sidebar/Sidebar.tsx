@@ -22,9 +22,9 @@ const Sidebar = ({ isOpen }: SidebarProps) => {
           <SidebarListItem
             key={label}
             path={path}
-            text={label}
+            label={label}
             isOpen={isOpen}
-            Icon={<Icon />}
+            Icon={Icon}
           />
         ))}
       </List>
