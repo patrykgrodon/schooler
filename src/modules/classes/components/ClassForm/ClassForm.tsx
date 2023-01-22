@@ -1,7 +1,7 @@
 import { Autocomplete, Grid, TextField } from "@mui/material";
 import { RequestButton } from "common/components";
 import { ClassFormValues } from "modules/classes/types";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { validationMessages } from "utils/validationPatterns";
 
 const defaultValues: ClassFormValues = {
@@ -14,7 +14,7 @@ const ClassForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-    clearErrors,
+    control,
   } = useForm<ClassFormValues>({ defaultValues });
 
   const submitHandler = (formValues: ClassFormValues) => {};
@@ -39,22 +39,24 @@ const ClassForm = () => {
       </Grid>
 
       <Grid item xs={12}>
-        <Autocomplete
-          options={options}
-          onChange={(_, val) =>
-            val && options.includes(val) && clearErrors("classTeacher")
-          }
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              {...register("classTeacher", {
-                required: validationMessages.required,
-              })}
-              size="small"
-              fullWidth
-              label="Wychowawca"
-              error={!!errors.classTeacher}
-              helperText={errors.classTeacher?.message}
+        <Controller
+          control={control}
+          name="classTeacher"
+          render={({ field }) => (
+            <Autocomplete
+              {...field}
+              onChange={(_, data) => field.onChange(data)}
+              options={options}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  size="small"
+                  fullWidth
+                  label="Wychowawca"
+                  error={!!errors.classTeacher}
+                  helperText={errors.classTeacher?.message}
+                />
+              )}
             />
           )}
         />

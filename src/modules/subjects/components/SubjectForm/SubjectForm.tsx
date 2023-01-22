@@ -45,7 +45,7 @@ const SubjectForm = () => {
           render={({ field }) => (
             <Autocomplete
               {...field}
-              onChange={(_: any, data: any) => field.onChange(data)}
+              onChange={(_, data) => field.onChange(data)}
               options={options}
               multiple
               renderInput={(params) => (

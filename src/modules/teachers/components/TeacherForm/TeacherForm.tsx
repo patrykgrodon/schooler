@@ -70,7 +70,7 @@ const TeacherForm = () => {
           render={({ field }) => (
             <Autocomplete
               multiple
-              onChange={(_: any, data: any) => field.onChange(data)}
+              onChange={(_, data) => field.onChange(data)}
               options={["Religia", "Matematyka"]}
               renderInput={(params) => (
                 <TextField
