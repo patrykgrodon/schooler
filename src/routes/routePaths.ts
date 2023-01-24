@@ -8,6 +8,7 @@ const routes = {
   Attendance: "/attendance",
   Messages: "/messages",
   Classes: "/classes",
+  Class: "/classes/:classId",
   Students: "/students",
   Subjects: "/subjects",
   Teachers: "/teachers",

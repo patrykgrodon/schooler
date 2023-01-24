@@ -1,5 +1,6 @@
 import { EditOutlined, VisibilityOutlined } from "@mui/icons-material";
 import {
+  Box,
   IconButton,
   Paper,
   Table,
@@ -10,6 +11,8 @@ import {
   TableRow,
 } from "@mui/material";
 import { CenteredCell } from "common/components";
+import { generatePath, Link } from "react-router-dom";
+import routes from "routes/routePaths";
 
 const headers = ["Nazwa klasy", "Wychowawca", "Ilość uczniów", "Akcje"];
 
@@ -64,7 +67,17 @@ const ClassesTable = () => {
                     border: "none",
                   },
                 }}>
-                <TableCell>{name}</TableCell>
+                <TableCell>
+                  <Box
+                    sx={{
+                      color: (theme) => theme.palette.text.primary,
+                      textDecoration: "none",
+                    }}
+                    component={Link}
+                    to={generatePath(routes.Class, { classId: name })}>
+                    <strong>{name}</strong>
+                  </Box>
+                </TableCell>
                 <CenteredCell>{classTeacher}</CenteredCell>
                 <CenteredCell>{studentCount}</CenteredCell>
                 <CenteredCell>

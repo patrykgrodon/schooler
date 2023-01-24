@@ -29,7 +29,9 @@ const SidebarListItem = ({
       sx={{
         display: "block",
         backgroundColor: (theme) =>
-          path === location.pathname ? theme.palette.action.hover : undefined,
+          location.pathname.includes(path)
+            ? theme.palette.action.hover
+            : undefined,
       }}>
       <ListItemButton
         sx={{
