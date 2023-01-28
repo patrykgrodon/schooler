@@ -3,6 +3,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Tooltip,
 } from "@mui/material";
 import { SidebarItem } from "common/constants/sidebarItems";
 import { matchPath, useLocation, useNavigate } from "react-router-dom";
@@ -33,26 +34,28 @@ const SidebarListItem = ({
         backgroundColor: (theme) =>
           highlightItem ? theme.palette.action.hover : undefined,
       }}>
-      <ListItemButton
-        sx={{
-          minHeight: 48,
-          justifyContent: isOpen ? "initial" : "center",
-          px: 2.5,
-        }}>
-        <ListItemIcon
+      <Tooltip title={isOpen ? undefined : label}>
+        <ListItemButton
           sx={{
-            minWidth: 0,
-            mr: isOpen ? 3 : "auto",
-            justifyContent: "center",
+            minHeight: 48,
+            justifyContent: isOpen ? "initial" : "center",
+            px: 2.5,
           }}>
-          <Icon />
-        </ListItemIcon>
-        <ListItemText
-          primary={label}
-          primaryTypographyProps={{ variant: "subtitle1" }}
-          sx={{ opacity: isOpen ? 1 : 0, fontWeight: 700 }}
-        />
-      </ListItemButton>
+          <ListItemIcon
+            sx={{
+              minWidth: 0,
+              mr: isOpen ? 3 : "auto",
+              justifyContent: "center",
+            }}>
+            <Icon />
+          </ListItemIcon>
+          <ListItemText
+            primary={label}
+            primaryTypographyProps={{ variant: "subtitle1" }}
+            sx={{ opacity: isOpen ? 1 : 0, fontWeight: 700 }}
+          />
+        </ListItemButton>
+      </Tooltip>
     </ListItem>
   );
 };
