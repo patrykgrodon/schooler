@@ -1,19 +1,18 @@
 import { Tabs, Tab, Paper } from "@mui/material";
 import { RouteValue } from "routes/routePaths";
 
-
-export type TabsBarItem ={
+export type TabsBarItem = {
   label: string;
   Icon?: React.ElementType;
   to?: RouteValue;
   component?: any;
-}
+};
 
 type TabsBarProps = {
   activeTab: number;
   handleChangeTab: (newValue: number) => void;
   ariaLabel: string;
-  tabs: TabsBarItem [];
+  tabs: TabsBarItem[];
 };
 
 const TabsBar = ({
@@ -24,21 +23,13 @@ const TabsBar = ({
 }: TabsBarProps) => {
   const changeTab = (_: any, newValue: any) => handleChangeTab(newValue);
 
-  const classes = {
-    main: "",
-    indicator: "",
-    icon: "",
-    tab: "",
-    selected: "",
-  };
   return (
-    <Paper square variant="outlined" className={classes.main}>
+    <Paper square variant="outlined">
       <Tabs
         aria-label={ariaLabel}
         variant="scrollable"
         scrollButtons="auto"
         value={activeTab}
-        classes={{ indicator: classes.indicator }}
         onChange={changeTab}>
         {tabs.map(({ label, Icon, to, component }) => (
           <Tab
@@ -46,8 +37,7 @@ const TabsBar = ({
             component={component}
             to={to}
             label={label}
-            icon={Icon && <Icon className={classes.icon} />}
-            className={classes.tab}
+            icon={Icon && <Icon sx={{ mb: "0 !important" }} />}
             sx={{
               display: "flex",
               flexDirection: "row",
@@ -56,7 +46,6 @@ const TabsBar = ({
               minHeight: "56px",
               textTransform: "none",
             }}
-            classes={{ selected: classes.selected }}
           />
         ))}
       </Tabs>
