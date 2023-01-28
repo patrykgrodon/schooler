@@ -4,25 +4,24 @@ import { layoutMainPadding } from "common/components/Layout/Layout";
 import LessonPlanTable from "modules/lessonPlan/components/LessonPlanTable/LessonPlanTable";
 import { StudentsTable } from "modules/students/components";
 import { TeachersTable } from "modules/teachers/components";
+import useStudentTabs from "../hooks/useStudentTabs";
 
-import useClassTabs from "../hooks/useClassTabs";
+const Student = () => {
+  const { studentName, activeTab, changeTab, tabs } = useStudentTabs();
 
-const Class = () => {
-  const { className, activeTab, changeTab, tabs } = useClassTabs();
-
-  if (!className)
-    return <Typography variant="h1">Brak danych o tej klasie</Typography>;
+  if (!studentName)
+    return <Typography variant="h1">Brak danych o użytkowniku</Typography>;
   return (
     <Box>
       <TabsBar
         activeTab={activeTab}
-        ariaLabel="Class page tabs bar"
+        ariaLabel="Student page tabs bar"
         handleChangeTab={changeTab}
         tabs={tabs}
       />
       <Box sx={{ p: layoutMainPadding }}>
         <Typography variant="h3" component="h1" sx={{ mb: 2 }}>
-          Klasa {className}
+          Uczeń {studentName}
         </Typography>
 
         {activeTab === 0 ? <StudentsTable /> : null}
@@ -33,4 +32,4 @@ const Class = () => {
   );
 };
 
-export default Class;
+export default Student;

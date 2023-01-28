@@ -1,17 +1,19 @@
 import { Tabs, Tab, Paper } from "@mui/material";
 import { RouteValue } from "routes/routePaths";
 
+
+export type TabsBarItem ={
+  label: string;
+  Icon?: React.ElementType;
+  to?: RouteValue;
+  component?: any;
+}
+
 type TabsBarProps = {
   activeTab: number;
   handleChangeTab: (newValue: number) => void;
   ariaLabel: string;
-  tabs:
-    | {
-        label: string;
-        Icon?: React.ElementType;
-        to?: RouteValue;
-        component?: any;
-      }[];
+  tabs: TabsBarItem [];
 };
 
 const TabsBar = ({
