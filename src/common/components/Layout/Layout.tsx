@@ -9,7 +9,12 @@ type LayoutProps = {
   children: React.ReactNode;
 };
 
-const removePaddingRoutesList: RouteValue[] = [routes.Class];
+const removePaddingRoutesList: RouteValue[] = [
+  routes.Class,
+  routes.ClassStudents,
+  routes.ClassTeachers,
+  routes.ClassLessonPlan,
+];
 const checkIfShouldRemovePadding = (pathname: string): boolean =>
   removePaddingRoutesList.some((route) => matchPath(route, pathname) !== null);
 

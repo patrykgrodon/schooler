@@ -27,7 +27,7 @@ const Router = () => {
           <Route path={routes.Attendance} element={<Attendance />} />
           <Route path={routes.Messages} element={<Messages />} />
           <Route path={routes.Classes} element={<Classes />} />
-          <Route path={routes.Class} element={<Class />} />
+          <Route path={`${routes.Class}/*`} element={<Class />} />
           <Route path={routes.Students} element={<Students />} />
           <Route path={routes.Subjects} element={<Subjects />} />
           <Route path={routes.Teachers} element={<Teachers />} />

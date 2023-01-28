@@ -9,10 +9,13 @@ const routes = {
   Messages: "/messages",
   Classes: "/classes",
   Class: "/classes/:classId",
+  ClassStudents: "/classes/:classId/students",
+  ClassTeachers: "/classes/:classId/teachers",
+  ClassLessonPlan: "/classes/:classId/lesson-plan",
   Students: "/students",
   Subjects: "/subjects",
   Teachers: "/teachers",
-};
+} as const;
 
 export default routes;
 
