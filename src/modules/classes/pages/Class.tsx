@@ -10,6 +10,17 @@ import useClassTabs from "../hooks/useClassTabs";
 const Class = () => {
   const { className, activeTab, changeTab, tabs } = useClassTabs();
 
+  const getHeaderContent = () => {
+    switch (activeTab) {
+      case 0:
+        return `Uczniowie klasy ${className}`;
+      case 1:
+        return `Nauczyciele klasy ${className}`;
+      case 2:
+        return `Plan lekcji klasy ${className}`;
+    }
+  };
+
   if (!className)
     return <Typography variant="h1">Brak danych o tej klasie</Typography>;
   return (
@@ -22,7 +33,7 @@ const Class = () => {
       />
       <Box sx={{ p: layoutMainPadding }}>
         <Typography variant="h3" component="h1" sx={{ mb: 2 }}>
-          Klasa {className}
+          {getHeaderContent()}
         </Typography>
 
         {activeTab === 0 ? <StudentsTable /> : null}
