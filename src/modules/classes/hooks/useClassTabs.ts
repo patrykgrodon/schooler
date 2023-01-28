@@ -1,37 +1,35 @@
 import { SchoolOutlined, WorkOutlined } from "@mui/icons-material";
 import { useState } from "react";
-import { generatePath, Link, useParams } from "react-router-dom";
-import routes, { RouteValue } from "routes/routePaths";
+import { generatePath, useParams } from "react-router-dom";
+import routes from "routes/routePaths";
+import getTabsBarItem from "utils/getTabsBarItem";
 
 const useClassTabs = () => {
   const classId = useParams<{ classId: string }>().classId!;
   const [activeTab, setActiveTab] = useState(0);
 
   const tabs = [
-    {
-      label: "Uczniowie",
-      Icon: SchoolOutlined,
-      to: generatePath(routes.ClassStudents, {
+    getTabsBarItem(
+      "Uczniowie",
+      SchoolOutlined,
+      generatePath(routes.ClassStudents, {
         classId,
-      }) as RouteValue,
-      component: Link,
-    },
-    {
-      label: "Nauczyciele",
-      Icon: WorkOutlined,
-      to: generatePath(routes.ClassTeachers, {
+      })
+    ),
+    getTabsBarItem(
+      "Nauczyciele",
+      WorkOutlined,
+      generatePath(routes.ClassTeachers, {
         classId,
-      }) as RouteValue,
-      component: Link,
-    },
-    {
-      label: "Plan lekcji",
-      Icon: SchoolOutlined,
-      to: generatePath(routes.ClassLessonPlan, {
+      })
+    ),
+    getTabsBarItem(
+      "Plan lekcji",
+      SchoolOutlined,
+      generatePath(routes.ClassLessonPlan, {
         classId,
-      }) as RouteValue,
-      component: Link,
-    },
+      })
+    ),
   ];
 
   const changeTab = (newActiveTab: number) => setActiveTab(newActiveTab);
