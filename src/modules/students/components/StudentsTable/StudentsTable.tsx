@@ -1,7 +1,8 @@
 import { EditOutlined, VisibilityOutlined } from "@mui/icons-material";
 import {
+  Box,
   IconButton,
-  Link,
+  Link as MuiLink,
   Paper,
   Table,
   TableBody,
@@ -11,6 +12,8 @@ import {
   TableRow,
 } from "@mui/material";
 import { CenteredCell } from "common/components";
+import { generatePath, Link } from "react-router-dom";
+import routes from "routes/routePaths";
 
 const headers = ["Imię Nazwisko", "Klasa", "E-mail", "Akcje"];
 
@@ -62,12 +65,22 @@ const StudentsTable = () => {
                     border: "none",
                   },
                 }}>
-                <TableCell>{fullName}</TableCell>
+                <TableCell>
+                  <Box
+                    sx={{
+                      color: (theme) => theme.palette.text.primary,
+                      textDecoration: "none",
+                    }}
+                    component={Link}
+                    to={generatePath(routes.Student, { studentId: fullName })}>
+                    <strong>{fullName}</strong>
+                  </Box>
+                </TableCell>
                 <CenteredCell>{className}</CenteredCell>
                 <CenteredCell>
-                  <Link href={`mailto:${getEmail(fullName)}`}>
+                  <MuiLink href={`mailto:${getEmail(fullName)}`}>
                     {getEmail(fullName)}
-                  </Link>
+                  </MuiLink>
                 </CenteredCell>
                 <CenteredCell>
                   {[VisibilityOutlined, EditOutlined].map((Icon, i) => (

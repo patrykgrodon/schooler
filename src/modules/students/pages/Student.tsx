@@ -1,13 +1,23 @@
 import { Box, Typography } from "@mui/material";
 import { TabsBar } from "common/components";
 import { layoutMainPadding } from "common/components/Layout/Layout";
-import LessonPlanTable from "modules/lessonPlan/components/LessonPlanTable/LessonPlanTable";
-import { StudentsTable } from "modules/students/components";
-import { TeachersTable } from "modules/teachers/components";
+import { AttendanceTable } from "modules/attendance/components";
+import { GradesTable } from "modules/grades/components";
 import useStudentTabs from "../hooks/useStudentTabs";
 
 const Student = () => {
   const { studentName, activeTab, changeTab, tabs } = useStudentTabs();
+
+  const getHeaderContent = () => {
+    switch (activeTab) {
+      case 0:
+        return `Oceny ucznia ${studentName}`;
+      case 1:
+        return `Obecności ucznia ${studentName}`;
+      default:
+        return "---";
+    }
+  };
 
   if (!studentName)
     return <Typography variant="h1">Brak danych o użytkowniku</Typography>;
@@ -21,12 +31,11 @@ const Student = () => {
       />
       <Box sx={{ p: layoutMainPadding }}>
         <Typography variant="h3" component="h1" sx={{ mb: 2 }}>
-          Uczeń {studentName}
+          {getHeaderContent()}
         </Typography>
 
-        {activeTab === 0 ? <StudentsTable /> : null}
-        {activeTab === 1 ? <TeachersTable /> : null}
-        {activeTab === 2 ? <LessonPlanTable /> : null}
+        {activeTab === 0 ? <GradesTable /> : null}
+        {activeTab === 1 ? <AttendanceTable /> : null}
       </Box>
     </Box>
   );
