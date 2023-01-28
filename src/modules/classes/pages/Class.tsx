@@ -1,46 +1,14 @@
-import { SchoolOutlined, WorkOutlined } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import { layoutMainPadding } from "common/components/Layout/Layout";
-import { useState } from "react";
-import { generatePath, Link, useParams } from "react-router-dom";
-import routes, { RouteValue } from "routes/routePaths";
+
 import TabsBar from "../components/TabsBar/TabsBar";
+import useClassTabs from "../hooks/useClassTabs";
 
 const Class = () => {
-  const params = useParams<{ classId: string }>();
-  const [activeTab, setActiveTab] = useState(0);
+  const { className, activeTab, changeTab, tabs } = useClassTabs();
 
-  if (!params.classId)
+  if (!className)
     return <Typography variant="h1">Brak danych o tej klasie</Typography>;
-
-  const tabs = [
-    {
-      label: "Uczniowie",
-      Icon: SchoolOutlined,
-      to: generatePath(routes.ClassStudents, {
-        classId: params.classId,
-      }) as RouteValue,
-      component: Link,
-    },
-    {
-      label: "Nauczyciele",
-      Icon: WorkOutlined,
-      to: generatePath(routes.ClassTeachers, {
-        classId: params.classId,
-      }) as RouteValue,
-      component: Link,
-    },
-    {
-      label: "Plan lekcji",
-      Icon: SchoolOutlined,
-      to: generatePath(routes.ClassLessonPlan, {
-        classId: params.classId,
-      }) as RouteValue,
-      component: Link,
-    },
-  ];
-
-  const changeTab = (newActiveTab: number) => setActiveTab(newActiveTab);
   return (
     <Box>
       <TabsBar
@@ -51,7 +19,7 @@ const Class = () => {
       />
       <Box sx={{ p: layoutMainPadding }}>
         <Typography variant="h3" component="h1">
-          Klasa {params.classId}
+          Klasa {className}
         </Typography>
       </Box>
     </Box>
