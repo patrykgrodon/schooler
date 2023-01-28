@@ -1,7 +1,7 @@
 import { useAppSelector } from "app/hooks";
 import { AccountType } from "modules/auth/authSlice";
 import AuthLayout from "modules/auth/components/AuthLayout";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import routes from "./routePaths";
 
 const getCorrectNavigateRoute = (accountType: AccountType) => {
@@ -18,6 +18,7 @@ const getCorrectNavigateRoute = (accountType: AccountType) => {
 const RestrictedRoutes = () => {
   const { user } = useAppSelector(({ auth }) => auth);
   const isRestricted = !user;
+  const location = useLocation();
 
   if (isRestricted)
     return (
@@ -26,7 +27,12 @@ const RestrictedRoutes = () => {
       </AuthLayout>
     );
 
-  return <Navigate to={getCorrectNavigateRoute(user.accountType)} replace />;
+  return (
+    <Navigate
+      to={location.state.from || getCorrectNavigateRoute(user.accountType)}
+      replace
+    />
+  );
 };
 
 export default RestrictedRoutes;
