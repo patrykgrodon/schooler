@@ -5,7 +5,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { SidebarItem } from "common/constants/sidebarItems";
-import { useLocation, useNavigate } from "react-router-dom";
+import { matchPath, useLocation, useNavigate } from "react-router-dom";
 
 type SidebarListItemProps = SidebarItem & { isOpen: boolean };
 
@@ -20,6 +20,8 @@ const SidebarListItem = ({
 
   const handleNavigate = () => navigate(path);
 
+  const highlightItem = matchPath(`${path}/*`, location.pathname);
+
   return (
     <ListItem
       key={label}
@@ -29,9 +31,7 @@ const SidebarListItem = ({
       sx={{
         display: "block",
         backgroundColor: (theme) =>
-          location.pathname.includes(path)
-            ? theme.palette.action.hover
-            : undefined,
+          highlightItem ? theme.palette.action.hover : undefined,
       }}>
       <ListItemButton
         sx={{
