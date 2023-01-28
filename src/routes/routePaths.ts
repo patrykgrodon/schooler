@@ -13,6 +13,9 @@ const routes = {
   ClassTeachers: "/classes/:classId/teachers",
   ClassLessonPlan: "/classes/:classId/lesson-plan",
   Students: "/students",
+  Student: "/students/:studentId",
+  StudentGrades: "/students/:studentId/grades",
+  StudentAttendance: "/students/:studentId/attendance",
   Subjects: "/subjects",
   Teachers: "/teachers",
 } as const;

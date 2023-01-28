@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import useSidebar from "common/hooks/useSidebar";
 import { matchPath, useLocation } from "react-router-dom";
-import routes, { RouteValue } from "routes/routePaths";
+import routes from "routes/routePaths";
 import Header from "./Header/Header";
 import Sidebar from "./Sidebar/Sidebar";
 
@@ -9,12 +9,8 @@ type LayoutProps = {
   children: React.ReactNode;
 };
 
-const removePaddingRoutesList: RouteValue[] = [
-  routes.Class,
-  routes.ClassStudents,
-  routes.ClassTeachers,
-  routes.ClassLessonPlan,
-];
+const removePaddingRoutesList = [`${routes.Class}/*`, `${routes.Student}/*`];
+
 const checkIfShouldRemovePadding = (pathname: string): boolean =>
   removePaddingRoutesList.some((route) => matchPath(route, pathname) !== null);
 
