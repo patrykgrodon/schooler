@@ -1,6 +1,8 @@
-import { TextField } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
 import { PasswordField, RequestButton } from "common/components";
+import { useAuth } from "modules/auth/contexts/authContext";
 import { RegisterFormValues } from "modules/auth/types";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   checkPasswordMatch,
@@ -27,8 +29,23 @@ const RegisterForm = () => {
     formState: { errors },
     watch,
   } = useForm<RegisterFormValues>({ defaultValues });
+  const { createAdmin } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const submitRegister = (formValues: RegisterFormValues) => {};
+  const submitRegister = async ({
+    email,
+    password,
+    schoolName,
+  }: RegisterFormValues) => {
+    setIsLoading(true);
+    try {
+      await createAdmin(email, password, schoolName);
+    } catch (err: any) {
+      setError(err.message);
+    }
+    setIsLoading(false);
+  };
 
   const password = watch("password");
 
@@ -78,7 +95,12 @@ const RegisterForm = () => {
         error={!!errors.confirmPassword}
         helperText={errors.confirmPassword?.message}
       />
-      <RequestButton type="submit" isLoading={false}>
+      {error ? (
+        <Typography variant="caption" color="error">
+          {error}
+        </Typography>
+      ) : null}
+      <RequestButton type="submit" isLoading={isLoading}>
         Utwórz konto
       </RequestButton>
 

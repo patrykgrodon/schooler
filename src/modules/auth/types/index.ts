@@ -17,3 +17,9 @@ export type RemindPasswordFormValues = {
 };
 
 export type Login = (loginFormValues: LoginFormValues) => Promise<User>;
+
+export type CreateAdmin = (
+  email: string,
+  password: string,
+  name: string
+) => Promise<void>;

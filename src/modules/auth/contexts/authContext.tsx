@@ -1,17 +1,23 @@
 import { Spinner } from "common/components";
-import { User } from "common/types";
-import { auth } from "firebase-config";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { AccountType, User } from "common/types";
+import { auth, db } from "firebase-config";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { deleteLSItem } from "utils/webStorage";
 import { getUserData } from "../api";
-import { Login } from "../types";
+import { CreateAdmin, Login } from "../types";
+import { doc, setDoc } from "@firebase/firestore";
 
 type AuthContextState = {
   login: Login;
   logout: () => Promise<void>;
   user: User | null;
+  createAdmin: CreateAdmin;
 };
 
 const AuthContext = createContext<AuthContextState | null>(null);
@@ -53,11 +59,26 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     setUser(null);
   };
 
+  const createAdmin: CreateAdmin = async (
+    email: string,
+    password: string,
+    name: string
+  ) => {
+    const {
+      user: { uid },
+    } = await createUserWithEmailAndPassword(auth, email, password);
+    const userDocRef = doc(db, "users", uid);
+    const schoolDocRef = doc(db, "schools", uid);
+    const accountType: AccountType = "admin";
+    await setDoc(userDocRef, { email, accountType, schoolId: uid });
+    await setDoc(schoolDocRef, { name });
+  };
+
   if (isCheckingAuth || isLoadingUserData)
     return <Spinner fullPage size="large" />;
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, createAdmin }}>
       {children}
     </AuthContext.Provider>
   );
