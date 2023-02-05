@@ -1,6 +1,8 @@
-import { Autocomplete, Grid, TextField } from "@mui/material";
+import { Autocomplete, Grid, TextField, Typography } from "@mui/material";
 import { RequestButton } from "common/components";
+import { useAuth } from "modules/auth/contexts/authContext";
 import { TeacherFormValues } from "modules/teachers/types";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { emailValidator, validationMessages } from "utils/validationPatterns";
 
@@ -11,15 +13,32 @@ const defaultValues: TeacherFormValues = {
   subjects: [],
 };
 
-const TeacherForm = () => {
+type TeacherFormProps = {
+  onSuccess: (password: string, teacherId: string) => void;
+};
+
+const TeacherForm = ({ onSuccess }: TeacherFormProps) => {
   const {
     handleSubmit,
     register,
     control,
     formState: { errors },
   } = useForm<TeacherFormValues>({ defaultValues });
+  const { createTeacher } = useAuth();
 
-  const submitHandler = (formValues: TeacherFormValues) => {};
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const submitHandler = async (formValues: TeacherFormValues) => {
+    setIsLoading(true);
+    try {
+      const { password, teacherId } = await createTeacher(formValues);
+      onSuccess(password, teacherId);
+    } catch (err: any) {
+      setError(err.message);
+    }
+    setIsLoading(false);
+  };
 
   return (
     <Grid
@@ -66,7 +85,6 @@ const TeacherForm = () => {
         <Controller
           control={control}
           name="subjects"
-          rules={{ required: validationMessages.required }}
           render={({ field }) => (
             <Autocomplete
               multiple
@@ -78,16 +96,21 @@ const TeacherForm = () => {
                   size="small"
                   fullWidth
                   label="Przedmioty"
-                  error={!!errors.subjects}
-                  helperText={errors.subjects?.message}
                 />
               )}
             />
           )}
         />
       </Grid>
+      {error ? (
+        <Grid item xs={12}>
+          <Typography variant="caption" color="error">
+            {error}
+          </Typography>
+        </Grid>
+      ) : null}
       <Grid item xs={12}>
-        <RequestButton type="submit" fullWidth>
+        <RequestButton type="submit" fullWidth isLoading={isLoading}>
           Dodaj
         </RequestButton>
       </Grid>

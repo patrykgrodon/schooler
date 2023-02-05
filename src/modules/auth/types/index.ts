@@ -1,4 +1,5 @@
 import { User } from "common/types";
+import { TeacherFormValues } from "modules/teachers/types";
 
 export type LoginFormValues = {
   email: string;
@@ -21,5 +22,9 @@ export type Login = (loginFormValues: LoginFormValues) => Promise<User>;
 export type CreateAdmin = (
   email: string,
   password: string,
-  name: string
+  schoolName: string
 ) => Promise<void>;
+
+export type CreateTeacher = (
+  values: TeacherFormValues
+) => Promise<{ password: string; teacherId: string }>;

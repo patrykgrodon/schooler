@@ -1,6 +1,6 @@
 import { Spinner } from "common/components";
 import { AccountType, User } from "common/types";
-import { auth, db } from "firebase-config";
+import { auth, db, secondaryAuth } from "firebase-config";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -10,14 +10,16 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { deleteLSItem } from "utils/webStorage";
 import { getUserData } from "../api";
-import { CreateAdmin, Login } from "../types";
+import { CreateAdmin, CreateTeacher, Login } from "../types";
 import { doc, setDoc } from "@firebase/firestore";
+import { generatePassword } from "utils/generatePassword";
 
 type AuthContextState = {
   login: Login;
   logout: () => Promise<void>;
   user: User | null;
   createAdmin: CreateAdmin;
+  createTeacher: CreateTeacher;
 };
 
 const AuthContext = createContext<AuthContextState | null>(null);
@@ -59,11 +61,7 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     setUser(null);
   };
 
-  const createAdmin: CreateAdmin = async (
-    email: string,
-    password: string,
-    name: string
-  ) => {
+  const createAdmin: CreateAdmin = async (email, password, schoolName) => {
     const {
       user: { uid },
     } = await createUserWithEmailAndPassword(auth, email, password);
@@ -71,14 +69,39 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     const schoolDocRef = doc(db, "schools", uid);
     const accountType: AccountType = "admin";
     await setDoc(userDocRef, { email, accountType, schoolId: uid });
-    await setDoc(schoolDocRef, { name });
+    await setDoc(schoolDocRef, { schoolName });
+  };
+
+  const createTeacher: CreateTeacher = async ({
+    email,
+    firstName,
+    lastName,
+    subjects,
+  }) => {
+    const password = generatePassword();
+    const {
+      user: { uid },
+    } = await createUserWithEmailAndPassword(secondaryAuth, email, password);
+    const userDocRef = doc(db, "users", uid);
+    const accountType: AccountType = "teacher";
+    await setDoc(userDocRef, {
+      email,
+      accountType,
+      schoolId: user!.schoolId,
+      firstName,
+      lastName,
+      subjects: subjects.map((subjectId) => doc(db, "subjects", subjectId)),
+    });
+
+    return { password, teacherId: uid };
   };
 
   if (isCheckingAuth || isLoadingUserData)
     return <Spinner fullPage size="large" />;
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, createAdmin }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, createAdmin, createTeacher }}>
       {children}
     </AuthContext.Provider>
   );

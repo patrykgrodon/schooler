@@ -5,6 +5,11 @@ import { TeacherForm, TeachersTable } from "../components";
 
 const Teachers = () => {
   const { isOpen, closeModal, openModal } = useModal();
+
+  const handleSuccess = (password: string, teacherId: string) => {
+    closeModal();
+  };
+
   return (
     <Box>
       <PageHeader
@@ -17,7 +22,7 @@ const Teachers = () => {
         isOpen={isOpen}
         handleClose={closeModal}
         title="Dodaj nauczyciela">
-        <TeacherForm />
+        <TeacherForm onSuccess={handleSuccess} />
       </FormDialog>
     </Box>
   );
