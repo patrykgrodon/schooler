@@ -29,7 +29,7 @@ const RestrictedRoutes = () => {
 
   return (
     <Navigate
-      to={location.state.from || getCorrectNavigateRoute(user.accountType)}
+      to={location.state?.from || getCorrectNavigateRoute(user.accountType)}
       replace
     />
   );
