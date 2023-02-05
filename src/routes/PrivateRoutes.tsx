@@ -1,10 +1,10 @@
-import { useAppSelector } from "app/hooks";
 import Layout from "common/components/Layout/Layout";
+import { useAuth } from "modules/auth/contexts/authContext";
 import { Outlet, Navigate, useLocation } from "react-router-dom";
 import routes from "./routePaths";
 
 const PrivateRoutes = () => {
-  const { user } = useAppSelector(({ auth }) => auth);
+  const { user } = useAuth();
   const location = useLocation();
   const isAuthorised = !!user;
   return isAuthorised ? (

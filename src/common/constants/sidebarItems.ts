@@ -8,7 +8,7 @@ import {
   TopicOutlined,
   WorkOutlined,
 } from "@mui/icons-material";
-import { AccountType } from "modules/auth/authSlice";
+import { AccountType } from "common/types";
 import routes, { RouteValue } from "routes/routePaths";
 
 export type SidebarItem = {

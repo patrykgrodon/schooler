@@ -7,18 +7,20 @@ import {
   Menu,
   Typography,
 } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "app/hooks";
 import useMenu from "common/hooks/useMenu";
-import { authActions } from "modules/auth/authSlice";
+import { useAuth } from "modules/auth/contexts/authContext";
 import UserAvatar from "../UserAvatar/UserAvatar";
 
 const UserMenu = () => {
   const { menuEl, openMenu, closeMenu } = useMenu();
-  const user = useAppSelector(({ auth }) => auth.user!);
-  const dispatch = useAppDispatch();
+  const { user, logout } = useAuth();
 
   const handleOpenMenu: React.MouseEventHandler<HTMLButtonElement> = (e) =>
     openMenu(e.currentTarget);
+
+  const handleLogout = () => {
+    logout();
+  };
 
   const listItemActions = [
     {
@@ -29,7 +31,7 @@ const UserMenu = () => {
     {
       text: "Wyloguj",
       Icon: LogoutOutlined,
-      onClick: () => dispatch(authActions.logout()),
+      onClick: handleLogout,
     },
   ] as const;
 
@@ -51,9 +53,9 @@ const UserMenu = () => {
             Patryk Testowy
           </Typography>
           <Typography variant="caption">
-            {user.accountType === "student"
+            {user!.accountType === "student"
               ? "Uczeń"
-              : user.accountType === "admin"
+              : user!.accountType === "admin"
               ? "Administrator"
               : "Nauczyciel"}
           </Typography>

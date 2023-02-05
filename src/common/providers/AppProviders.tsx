@@ -1,5 +1,4 @@
-import { store } from "app/store";
-import { Provider } from "react-redux";
+import AuthContextProvider from "modules/auth/contexts/authContext";
 import MuiThemeProviders from "./MuiThemeProviders";
 
 type AppProvidersProps = {
@@ -9,7 +8,7 @@ type AppProvidersProps = {
 const AppProviders = ({ children }: AppProvidersProps) => {
   return (
     <MuiThemeProviders>
-      <Provider store={store}>{children}</Provider>
+      <AuthContextProvider>{children}</AuthContextProvider>
     </MuiThemeProviders>
   );
 };

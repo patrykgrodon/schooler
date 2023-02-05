@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
-import { useAppSelector } from "app/hooks";
 import { FormDialog, PageHeader } from "common/components";
 import useModal from "common/hooks/useModal";
+import { useAuth } from "modules/auth/contexts/authContext";
 import { ClassForm, ClassesTable } from "../components";
 
 const Classes = () => {
-  const { user } = useAppSelector(({ auth }) => auth);
+  const { user } = useAuth();
 
   const { isOpen, closeModal, openModal } = useModal();
 

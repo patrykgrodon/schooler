@@ -1,6 +1,6 @@
 import { List } from "@mui/material";
-import { useAppSelector } from "app/hooks";
 import sidebarItems from "common/constants/sidebarItems";
+import { useAuth } from "modules/auth/contexts/authContext";
 
 import SidebarListItem from "./SidebarListItem/SidebarListItem";
 import { Drawer } from "./SidebarStyles";
@@ -10,7 +10,7 @@ type SidebarProps = {
 };
 
 const Sidebar = ({ isOpen }: SidebarProps) => {
-  const user = useAppSelector(({ auth }) => auth.user!);
+  const { user } = useAuth();
 
   return (
     <Drawer
@@ -18,7 +18,7 @@ const Sidebar = ({ isOpen }: SidebarProps) => {
       variant="permanent"
       open={isOpen}>
       <List>
-        {sidebarItems[user.accountType].map(({ label, Icon, path }) => (
+        {sidebarItems[user!.accountType].map(({ label, Icon, path }) => (
           <SidebarListItem
             key={label}
             path={path}

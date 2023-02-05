@@ -1,9 +1,7 @@
 import { TextField } from "@mui/material";
-import { useAppDispatch } from "app/hooks";
 import { PasswordField, RequestButton } from "common/components";
 import { RegisterFormValues } from "modules/auth/types";
 import { useForm } from "react-hook-form";
-import { createAdminAccount } from "modules/auth/authSlice";
 import {
   checkPasswordMatch,
   emailValidator,
@@ -29,11 +27,8 @@ const RegisterForm = () => {
     formState: { errors },
     watch,
   } = useForm<RegisterFormValues>({ defaultValues });
-  const dispatch = useAppDispatch();
 
-  const submitRegister = (formValues: RegisterFormValues) => {
-    dispatch(createAdminAccount(formValues));
-  };
+  const submitRegister = (formValues: RegisterFormValues) => {};
 
   const password = watch("password");
 

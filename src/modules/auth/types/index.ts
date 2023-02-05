@@ -1,3 +1,5 @@
+import { User } from "common/types";
+
 export type LoginFormValues = {
   email: string;
   password: string;
@@ -13,3 +15,5 @@ export type RegisterFormValues = {
 export type RemindPasswordFormValues = {
   email: string;
 };
+
+export type Login = (loginFormValues: LoginFormValues) => Promise<User>;

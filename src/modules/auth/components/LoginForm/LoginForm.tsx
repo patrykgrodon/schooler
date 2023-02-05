@@ -1,11 +1,12 @@
-import { Box, TextField, Link as MuiLink } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "app/hooks";
+import { Box, TextField, Link as MuiLink, Typography } from "@mui/material";
 import { PasswordField, RequestButton } from "common/components";
-import { login } from "modules/auth/authSlice";
+import { useAuth } from "modules/auth/contexts/authContext";
 import { LoginFormValues } from "modules/auth/types";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import routes from "routes/routePaths";
+import { getCorrectNavigateRoute } from "utils/getCorrectNavigationRoute";
 import {
   emailValidator,
   passwordValidator,
@@ -26,11 +27,22 @@ const LoginForm = () => {
   } = useForm<LoginFormValues>({
     defaultValues,
   });
-  const { isLoggingIn } = useAppSelector(({ auth }) => auth);
-  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const submitLogin = (formValues: LoginFormValues) => {
-    dispatch(login(formValues));
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const { login } = useAuth();
+
+  const submitLogin = async (formValues: LoginFormValues) => {
+    setIsLoading(true);
+    try {
+      const user = await login(formValues);
+      navigate(getCorrectNavigateRoute(user.accountType));
+    } catch (err: any) {
+      setError(err.message);
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -56,7 +68,12 @@ const LoginForm = () => {
         error={!!errors.password}
         helperText={errors.password?.message}
       />
-      <RequestButton type="submit" isLoading={isLoggingIn}>
+      {error ? (
+        <Typography variant="caption" color="error">
+          {error}
+        </Typography>
+      ) : null}
+      <RequestButton type="submit" isLoading={isLoading}>
         Zaloguj się
       </RequestButton>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>

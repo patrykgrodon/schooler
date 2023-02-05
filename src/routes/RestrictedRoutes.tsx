@@ -1,22 +1,10 @@
-import { useAppSelector } from "app/hooks";
-import { AccountType } from "modules/auth/authSlice";
 import AuthLayout from "modules/auth/components/AuthLayout";
+import { useAuth } from "modules/auth/contexts/authContext";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import routes from "./routePaths";
-
-const getCorrectNavigateRoute = (accountType: AccountType) => {
-  switch (accountType) {
-    case "admin":
-      return routes.Classes;
-    case "student":
-      return routes.LessonPlan;
-    case "teacher":
-      return routes.LessonPlan;
-  }
-};
+import { getCorrectNavigateRoute } from "utils/getCorrectNavigationRoute";
 
 const RestrictedRoutes = () => {
-  const { user } = useAppSelector(({ auth }) => auth);
+  const { user } = useAuth();
   const isRestricted = !user;
   const location = useLocation();
 
