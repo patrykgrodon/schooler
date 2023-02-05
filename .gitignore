@@ -27,3 +27,5 @@ yarn-error.log*
 /concepts.md
 /Models.ts
 /demoview.png
+
+.env
