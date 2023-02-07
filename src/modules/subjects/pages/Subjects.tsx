@@ -5,6 +5,11 @@ import { SubjectForm, SubjectsTable } from "../components";
 
 const Subjects = () => {
   const { isOpen, closeModal, openModal } = useModal();
+
+  const onSuccess = () => {
+    closeModal();
+  };
+
   return (
     <Box>
       <PageHeader
@@ -17,7 +22,7 @@ const Subjects = () => {
         isOpen={isOpen}
         handleClose={closeModal}
         title="Dodaj przedmiot">
-        <SubjectForm />
+        <SubjectForm onSuccess={onSuccess} />
       </FormDialog>
     </Box>
   );

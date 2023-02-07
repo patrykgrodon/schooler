@@ -1,6 +1,8 @@
-import { Autocomplete, Grid, TextField } from "@mui/material";
+import { Autocomplete, Grid, TextField, Typography } from "@mui/material";
 import { RequestButton } from "common/components";
+import useSubjectCreator from "modules/subjects/hooks/useSubjectCreator";
 import { SubjectFormValues } from "modules/subjects/types";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { validationMessages } from "utils/validationPatterns";
 
@@ -9,7 +11,11 @@ const defaultValues: SubjectFormValues = {
   teachers: [],
 };
 
-const SubjectForm = () => {
+type SubjectFormProps = {
+  onSuccess: () => void;
+};
+
+const SubjectForm = ({ onSuccess }: SubjectFormProps) => {
   const {
     register,
     handleSubmit,
@@ -17,8 +23,22 @@ const SubjectForm = () => {
     control,
   } = useForm<SubjectFormValues>({ defaultValues });
 
-  const submitHandler = (formValues: SubjectFormValues) => {};
+  const { createSubject } = useSubjectCreator();
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const submitHandler = async (formValues: SubjectFormValues) => {
+    setError("");
+    setIsLoading(true);
+    try {
+      await createSubject(formValues);
+      onSuccess();
+    } catch (err: any) {
+      setError(err.message);
+    }
+    setIsLoading(false);
+  };
   const options = ["Zbigniew Robak"];
 
   return (
@@ -62,8 +82,15 @@ const SubjectForm = () => {
           )}
         />
       </Grid>
+      {error ? (
+        <Grid item xs={12}>
+          <Typography variant="caption" color="error">
+            {error}
+          </Typography>
+        </Grid>
+      ) : null}
       <Grid item xs={12}>
-        <RequestButton type="submit" fullWidth>
+        <RequestButton type="submit" fullWidth isLoading={isLoading}>
           Dodaj
         </RequestButton>
       </Grid>
