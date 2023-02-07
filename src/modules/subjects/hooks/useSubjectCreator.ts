@@ -11,12 +11,13 @@ import { db } from "firebase-config";
 
 const useSubjectCreator = () => {
   const { user } = useAuth();
+
   const createSubject: CreateSubject = async ({ name, teachers }) => {
     const teacherDocs = teachers.map((teacherId) =>
       doc(db, "users", teacherId)
     );
     const createdSubject = await addDoc(collection(db, "subjects"), {
-      school: doc(db, "schools", user!.schoolId),
+      school: user!.school,
       name,
       teachers: teacherDocs,
     });

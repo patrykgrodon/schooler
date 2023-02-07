@@ -1,5 +1,5 @@
 import { Autocomplete, Grid, TextField } from "@mui/material";
-import { ErrorMessage, RequestButton } from "common/components";
+import { RequestButton, SubmitErrorMessage } from "common/components";
 import useStudentCreator from "modules/students/hooks/useStudentCreator";
 import { StudentFormValues } from "modules/students/types";
 import { useState } from "react";
@@ -94,7 +94,7 @@ const StudentForm = ({ onSuccess }: StudentFormProps) => {
       </Grid>
       {error ? (
         <Grid item xs={12}>
-          <ErrorMessage error={error} />
+          <SubmitErrorMessage error={error} />
         </Grid>
       ) : null}
       <Grid item xs={12}>

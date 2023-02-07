@@ -23,7 +23,7 @@ const useTeacherCreator = () => {
     await setDoc(userDocRef, {
       email,
       accountType,
-      schoolId: user!.schoolId,
+      school: user!.school,
       firstName,
       lastName,
       subjects: subjects.map((subjectId) => doc(db, "subjects", subjectId)),

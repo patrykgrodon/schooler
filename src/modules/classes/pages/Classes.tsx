@@ -10,6 +10,11 @@ const Classes = () => {
   const { isOpen, closeModal, openModal } = useModal();
 
   const displayAddClassBtn = user?.accountType === "admin";
+
+  const onSuccess = (classId: string) => {
+    closeModal();
+  };
+
   return (
     <Box>
       <PageHeader
@@ -23,7 +28,7 @@ const Classes = () => {
           isOpen={isOpen}
           handleClose={closeModal}
           title="Dodaj klasę">
-          <ClassForm />
+          <ClassForm onSuccess={onSuccess} />
         </FormDialog>
       ) : null}
     </Box>

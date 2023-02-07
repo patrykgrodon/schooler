@@ -1,5 +1,5 @@
 import { Autocomplete, Grid, TextField } from "@mui/material";
-import { ErrorMessage, RequestButton } from "common/components";
+import { RequestButton, SubmitErrorMessage } from "common/components";
 import useSubjectCreator from "modules/subjects/hooks/useSubjectCreator";
 import { SubjectFormValues } from "modules/subjects/types";
 import { useState } from "react";
@@ -84,7 +84,7 @@ const SubjectForm = ({ onSuccess }: SubjectFormProps) => {
       </Grid>
       {error ? (
         <Grid item xs={12}>
-          <ErrorMessage error={error} />
+          <SubmitErrorMessage error={error} />
         </Grid>
       ) : null}
       <Grid item xs={12}>

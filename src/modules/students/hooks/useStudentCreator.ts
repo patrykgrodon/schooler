@@ -25,7 +25,7 @@ const useStudentCreator = () => {
     await setDoc(userDocRef, {
       email,
       accountType,
-      school: doc(db, "schools", user!.schoolId),
+      school: user!.school,
       firstName,
       lastName,
       ...(assignedToClass ? { class: classDocRef } : {}),
