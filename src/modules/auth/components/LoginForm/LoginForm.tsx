@@ -35,6 +35,7 @@ const LoginForm = () => {
   const { login } = useAuth();
 
   const submitLogin = async (formValues: LoginFormValues) => {
+    setError("");
     setIsLoading(true);
     try {
       const user = await login(formValues);

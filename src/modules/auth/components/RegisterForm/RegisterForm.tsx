@@ -38,6 +38,7 @@ const RegisterForm = () => {
     password,
     schoolName,
   }: RegisterFormValues) => {
+    setError("");
     setIsLoading(true);
     try {
       await createAdmin(email, password, schoolName);

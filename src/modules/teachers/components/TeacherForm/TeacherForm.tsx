@@ -30,6 +30,7 @@ const TeacherForm = ({ onSuccess }: TeacherFormProps) => {
   const [error, setError] = useState("");
 
   const submitHandler = async (formValues: TeacherFormValues) => {
+    setError("");
     setIsLoading(true);
     try {
       const { password, teacherId } = await createTeacher(formValues);
