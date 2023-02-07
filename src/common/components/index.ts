@@ -1,5 +1,6 @@
 import CenteredCell from "./CenteredCell/CenteredCell";
 import CloseButton from "./dialogs/CloseButton/CloseButton";
+import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import FormDialog from "./dialogs/FormDialog/FormDialog";
 import Logo from "./Logo/Logo";
 import PasswordField from "./PasswordField/PasswordField";
@@ -13,6 +14,7 @@ import TabsBar from "./TabsBar/TabsBar";
 export {
   CenteredCell,
   CloseButton,
+  ErrorMessage,
   FormDialog,
   Logo,
   PasswordField,

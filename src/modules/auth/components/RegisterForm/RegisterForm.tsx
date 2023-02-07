@@ -1,5 +1,5 @@
-import { TextField, Typography } from "@mui/material";
-import { PasswordField, RequestButton } from "common/components";
+import { TextField } from "@mui/material";
+import { ErrorMessage, PasswordField, RequestButton } from "common/components";
 import { useAuth } from "modules/auth/contexts/authContext";
 import { RegisterFormValues } from "modules/auth/types";
 import { useState } from "react";
@@ -96,11 +96,7 @@ const RegisterForm = () => {
         error={!!errors.confirmPassword}
         helperText={errors.confirmPassword?.message}
       />
-      {error ? (
-        <Typography variant="caption" color="error">
-          {error}
-        </Typography>
-      ) : null}
+      {error ? <ErrorMessage error={error} /> : null}
       <RequestButton type="submit" isLoading={isLoading}>
         Utwórz konto
       </RequestButton>

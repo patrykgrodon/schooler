@@ -1,5 +1,5 @@
-import { Box, TextField, Link as MuiLink, Typography } from "@mui/material";
-import { PasswordField, RequestButton } from "common/components";
+import { Box, TextField, Link as MuiLink } from "@mui/material";
+import { ErrorMessage, PasswordField, RequestButton } from "common/components";
 import { useAuth } from "modules/auth/contexts/authContext";
 import { LoginFormValues } from "modules/auth/types";
 import { useState } from "react";
@@ -69,11 +69,7 @@ const LoginForm = () => {
         error={!!errors.password}
         helperText={errors.password?.message}
       />
-      {error ? (
-        <Typography variant="caption" color="error">
-          {error}
-        </Typography>
-      ) : null}
+      {error ? <ErrorMessage error={error} /> : null}
       <RequestButton type="submit" isLoading={isLoading}>
         Zaloguj się
       </RequestButton>

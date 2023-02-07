@@ -1,5 +1,5 @@
-import { Autocomplete, Grid, TextField, Typography } from "@mui/material";
-import { RequestButton } from "common/components";
+import { Autocomplete, Grid, TextField } from "@mui/material";
+import { ErrorMessage, RequestButton } from "common/components";
 import useTeacherCreator from "modules/teachers/hooks/useTeacherCreator";
 import { TeacherFormValues } from "modules/teachers/types";
 import { useState } from "react";
@@ -105,9 +105,7 @@ const TeacherForm = ({ onSuccess }: TeacherFormProps) => {
       </Grid>
       {error ? (
         <Grid item xs={12}>
-          <Typography variant="caption" color="error">
-            {error}
-          </Typography>
+          <ErrorMessage error={error} />
         </Grid>
       ) : null}
       <Grid item xs={12}>
