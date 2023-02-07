@@ -3,35 +3,41 @@ import { db, secondaryAuth } from "firebase-config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useAuth } from "modules/auth/contexts/authContext";
 import { generatePassword } from "utils/generatePassword";
-import { doc, setDoc } from "firebase/firestore";
-import { CreateTeacher } from "../types";
+import { doc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { CreateStudent } from "../types";
 
-const useTeacherCreator = () => {
+const useStudentCreator = () => {
   const { user } = useAuth();
-  const createTeacher: CreateTeacher = async ({
+  const createStudent: CreateStudent = async ({
     email,
     firstName,
     lastName,
-    subjects,
+    assignedToClass,
   }) => {
     const password = generatePassword();
     const {
       user: { uid },
     } = await createUserWithEmailAndPassword(secondaryAuth, email, password);
+
     const userDocRef = doc(db, "users", uid);
-    const accountType: AccountType = "teacher";
+    const classDocRef = doc(db, "classes", assignedToClass);
+    const accountType: AccountType = "student";
     await setDoc(userDocRef, {
       email,
       accountType,
-      schoolId: user!.schoolId,
+      school: doc(db, "schools", user!.schoolId),
       firstName,
       lastName,
-      subjects: subjects.map((subjectId) => doc(db, "subjects", subjectId)),
+      ...(assignedToClass ? { class: classDocRef } : {}),
     });
+    if (assignedToClass)
+      await updateDoc(classDocRef, {
+        students: arrayUnion(userDocRef),
+      });
 
-    return { password, teacherId: uid };
+    return { password, studentId: uid };
   };
-  return { createTeacher };
+  return { createStudent };
 };
 
-export default useTeacherCreator;
+export default useStudentCreator;

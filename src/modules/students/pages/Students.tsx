@@ -5,6 +5,9 @@ import { StudentForm, StudentsTable } from "../components";
 
 const Students = () => {
   const { isOpen, closeModal, openModal } = useModal();
+  const onSuccess = (password: string, studentId: string) => {
+    closeModal();
+  };
   return (
     <Box>
       <PageHeader
@@ -14,7 +17,7 @@ const Students = () => {
       />
       <StudentsTable />
       <FormDialog isOpen={isOpen} handleClose={closeModal} title="Dodaj ucznia">
-        <StudentForm />
+        <StudentForm onSuccess={onSuccess} />
       </FormDialog>
     </Box>
   );

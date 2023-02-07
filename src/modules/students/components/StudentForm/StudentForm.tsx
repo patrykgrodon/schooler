@@ -1,6 +1,8 @@
-import { Autocomplete, Grid, TextField } from "@mui/material";
+import { Autocomplete, Grid, TextField, Typography } from "@mui/material";
 import { RequestButton } from "common/components";
+import useStudentCreator from "modules/students/hooks/useStudentCreator";
 import { StudentFormValues } from "modules/students/types";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { emailValidator, validationMessages } from "utils/validationPatterns";
 
@@ -11,7 +13,11 @@ const defaultValues: StudentFormValues = {
   assignedToClass: "",
 };
 
-const StudentForm = () => {
+type StudentFormProps = {
+  onSuccess: (password: string, studentId: string) => void;
+};
+
+const StudentForm = ({ onSuccess }: StudentFormProps) => {
   const {
     register,
     handleSubmit,
@@ -19,8 +25,22 @@ const StudentForm = () => {
   } = useForm<StudentFormValues>({
     defaultValues,
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const submitHandler = (formValues: StudentFormValues) => {};
+  const { createStudent } = useStudentCreator();
+
+  const submitHandler = async (formValues: StudentFormValues) => {
+    setError("");
+    setIsLoading(true);
+    try {
+      const { password, studentId } = await createStudent(formValues);
+      onSuccess(password, studentId);
+    } catch (err: any) {
+      setError(err.message);
+    }
+    setIsLoading(false);
+  };
 
   return (
     <Grid
@@ -72,8 +92,15 @@ const StudentForm = () => {
           )}
         />
       </Grid>
+      {error ? (
+        <Grid item xs={12}>
+          <Typography variant="caption" color="error">
+            {error}
+          </Typography>
+        </Grid>
+      ) : null}
       <Grid item xs={12}>
-        <RequestButton fullWidth type="submit">
+        <RequestButton fullWidth type="submit" isLoading={isLoading}>
           Dodaj
         </RequestButton>
       </Grid>
