@@ -1,6 +1,6 @@
 import { Autocomplete, Grid, TextField, Typography } from "@mui/material";
 import { RequestButton } from "common/components";
-import { useAuth } from "modules/auth/contexts/authContext";
+import useTeacherCreator from "modules/teachers/hooks/useTeacherCreator";
 import { TeacherFormValues } from "modules/teachers/types";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -24,7 +24,7 @@ const TeacherForm = ({ onSuccess }: TeacherFormProps) => {
     control,
     formState: { errors },
   } = useForm<TeacherFormValues>({ defaultValues });
-  const { createTeacher } = useAuth();
+  const { createTeacher } = useTeacherCreator();
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");

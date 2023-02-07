@@ -1,6 +1,6 @@
 import { Spinner } from "common/components";
 import { AccountType, User } from "common/types";
-import { auth, db, secondaryAuth } from "firebase-config";
+import { auth, db } from "firebase-config";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -10,16 +10,14 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { deleteLSItem } from "utils/webStorage";
 import { getUserData } from "../api";
-import { CreateAdmin, CreateTeacher, Login } from "../types";
+import { CreateAdmin, Login } from "../types";
 import { doc, setDoc } from "@firebase/firestore";
-import { generatePassword } from "utils/generatePassword";
 
 type AuthContextState = {
   login: Login;
   logout: () => Promise<void>;
   user: User | null;
   createAdmin: CreateAdmin;
-  createTeacher: CreateTeacher;
 };
 
 const AuthContext = createContext<AuthContextState | null>(null);
@@ -72,36 +70,11 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     await setDoc(schoolDocRef, { schoolName });
   };
 
-  const createTeacher: CreateTeacher = async ({
-    email,
-    firstName,
-    lastName,
-    subjects,
-  }) => {
-    const password = generatePassword();
-    const {
-      user: { uid },
-    } = await createUserWithEmailAndPassword(secondaryAuth, email, password);
-    const userDocRef = doc(db, "users", uid);
-    const accountType: AccountType = "teacher";
-    await setDoc(userDocRef, {
-      email,
-      accountType,
-      schoolId: user!.schoolId,
-      firstName,
-      lastName,
-      subjects: subjects.map((subjectId) => doc(db, "subjects", subjectId)),
-    });
-
-    return { password, teacherId: uid };
-  };
-
   if (isCheckingAuth || isLoadingUserData)
     return <Spinner fullPage size="large" />;
 
   return (
-    <AuthContext.Provider
-      value={{ user, login, logout, createAdmin, createTeacher }}>
+    <AuthContext.Provider value={{ user, login, logout, createAdmin }}>
       {children}
     </AuthContext.Provider>
   );
