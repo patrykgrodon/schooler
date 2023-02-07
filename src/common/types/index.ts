@@ -1,5 +1,3 @@
-import { DocumentData, DocumentReference } from "firebase/firestore";
-
 export type AccountType = "admin" | "teacher" | "student";
 
 type Subject = {};
@@ -8,7 +6,7 @@ export type User =
   | {
       id: string;
       email: string;
-      school: DocumentReference<DocumentData>;
+      school: { schoolName: string; id: string };
     } & (
       | { accountType: "admin"; schoolName: string }
       | {
