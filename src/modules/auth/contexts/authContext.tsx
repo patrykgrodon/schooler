@@ -6,17 +6,18 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { deleteLSItem } from "utils/webStorage";
 import { getUserData } from "../api";
 import { CreateAdmin, Login } from "../types";
 import { doc, setDoc } from "@firebase/firestore";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 type AuthContextState = {
   login: Login;
   logout: () => Promise<void>;
-  user: User | null;
+  user: User | undefined;
   createAdmin: CreateAdmin;
 };
 
@@ -27,21 +28,16 @@ type AuthContextProviderProps = {
 };
 
 const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
-  const [user, setUser] = useState<User | null>(null);
   const [userInfo, isCheckingAuth] = useAuthState(auth);
-  const [isLoadingUserData, setIsLoadingUserData] = useState(false);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (!userInfo) return;
-    (async () => {
-      setIsLoadingUserData(true);
-      try {
-        const userData = await getUserData(userInfo.uid);
-        setUser(userData);
-      } catch (err: any) {}
-      setIsLoadingUserData(false);
-    })();
-  }, [userInfo]);
+  const setUserData = (user: User | undefined) =>
+    queryClient.setQueryData(["user", userInfo?.uid], () => user);
+
+  const { data: user, isLoading: isLoadingUserData } = useQuery(
+    ["user", userInfo?.uid],
+    () => (!userInfo ? undefined : getUserData(userInfo!.uid))
+  );
 
   const login: Login = async (loginFormValues) => {
     const { email, password } = loginFormValues;
@@ -49,14 +45,14 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       user: { uid },
     } = await signInWithEmailAndPassword(auth, email, password);
     const userData = await getUserData(uid);
-    setUser(userData);
+
     return userData;
   };
 
   const logout = async () => {
     await signOut(auth);
     deleteLSItem("auth");
-    setUser(null);
+    setUserData(undefined);
   };
 
   const createAdmin: CreateAdmin = async (email, password, schoolName) => {
