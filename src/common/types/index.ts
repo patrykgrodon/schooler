@@ -1,19 +1,24 @@
+import { DocumentData, DocumentReference } from "firebase/firestore";
+import { Student } from "modules/students/types";
+import { Teacher } from "modules/teachers/types";
+
 export type AccountType = "admin" | "teacher" | "student";
 
-type Subject = {};
+export type Admin = {
+  accountType: "admin";
+  id: string;
+  school: School;
+};
 
 export type User =
-  | {
-      id: string;
-      email: string;
-      school: { schoolName: string; id: string };
-    } & (
-      | { accountType: "admin"; schoolName: string }
-      | {
-          accountType: "teacher";
-          firstName: string;
-          lastName: string;
-          subjects: Subject[];
-        }
-      | { accountType: "student" }
-    );
+  | ({ accountType: "admin" } & Admin)
+  | ({ accountType: "teacher" } & Teacher)
+  | ({ accountType: "student" } & Student);
+
+export type DocRef = DocumentReference<DocumentData>;
+
+export type School = {
+  id: string;
+  name: string;
+};
+export type SchoolDoc = School;

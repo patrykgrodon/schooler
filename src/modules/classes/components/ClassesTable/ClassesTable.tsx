@@ -11,40 +11,17 @@ import {
   TableRow,
 } from "@mui/material";
 import { CenteredCell } from "common/components";
+import { ClassType } from "modules/classes/types";
 import { generatePath, Link } from "react-router-dom";
 import routes from "routes/routePaths";
 
 const headers = ["Nazwa klasy", "Wychowawca", "Ilość uczniów", "Akcje"];
 
-const rows = [
-  {
-    name: "I B",
-    classTeacher: "Jan Pawlak",
-    studentCount: 24,
-  },
-  {
-    name: "II B",
-    classTeacher: "Krzysztof Granus",
-    studentCount: 17,
-  },
-  {
-    name: "III B",
-    classTeacher: "Zbigniew Robak",
-    studentCount: 27,
-  },
-  {
-    name: "IV B",
-    classTeacher: "Bartosz Krzemyk",
-    studentCount: 30,
-  },
-  {
-    name: "V B",
-    classTeacher: "Dawid Kopiec",
-    studentCount: 22,
-  },
-];
+type ClassesTableProps = {
+  classes: ClassType[];
+};
 
-const ClassesTable = () => {
+const ClassesTable = ({ classes }: ClassesTableProps) => {
   return (
     <Paper sx={{ overflow: "hidden" }}>
       <TableContainer>
@@ -59,9 +36,9 @@ const ClassesTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map(({ name, classTeacher, studentCount }) => (
+            {classes.map(({ name, classTeacher, students, id }) => (
               <TableRow
-                key={name}
+                key={id}
                 sx={{
                   "&:last-child td": {
                     border: "none",
@@ -74,12 +51,16 @@ const ClassesTable = () => {
                       textDecoration: "none",
                     }}
                     component={Link}
-                    to={generatePath(routes.Class, { classId: name })}>
+                    to={generatePath(routes.Class, { classId: id })}>
                     <strong>{name}</strong>
                   </Box>
                 </TableCell>
-                <CenteredCell>{classTeacher}</CenteredCell>
-                <CenteredCell>{studentCount}</CenteredCell>
+                <CenteredCell>
+                  {classTeacher
+                    ? `${classTeacher.firstName} ${classTeacher.lastName}`
+                    : "---"}
+                </CenteredCell>
+                <CenteredCell>{students.length}</CenteredCell>
                 <CenteredCell>
                   {[VisibilityOutlined, EditOutlined].map((Icon, i) => (
                     <IconButton

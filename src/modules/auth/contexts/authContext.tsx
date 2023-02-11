@@ -36,7 +36,8 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   const { data: user, isLoading: isLoadingUserData } = useQuery(
     ["user", userInfo?.uid],
-    () => (!userInfo ? undefined : getUserData(userInfo!.uid))
+    () => getUserData(userInfo!.uid),
+    { enabled: !!userInfo?.uid }
   );
 
   const login: Login = async (loginFormValues) => {

@@ -19,7 +19,6 @@ const useSubjectCreator = () => {
     const createdSubject = await addDoc(collection(db, "subjects"), {
       school: user!.school,
       name,
-      teachers: teacherDocs,
     });
     teacherDocs.forEach(async (teacherDoc) => {
       await updateDoc(teacherDoc, { subjects: arrayUnion(createdSubject) });

@@ -1,34 +1,31 @@
 import {
   DocumentData,
-  QuerySnapshot,
   DocumentSnapshot,
   getDoc,
+  QuerySnapshot,
 } from "@firebase/firestore";
 
-export const parseGetDocs = <T>(data: QuerySnapshot<DocumentData>): T => {
-  return data.docs.map((doc) => ({
-    ...doc.data(),
-    id: doc.id,
-  })) as T;
-};
+export const parseGetDocs = <T>(data: QuerySnapshot<DocumentData>): T =>
+  data.docs.map((doc) => parseGetDoc<T>(doc)) as T;
 
-export const parseGetDoc = <T>(data: DocumentSnapshot<DocumentData>): T => {
-  return {
+export const parseGetDoc = <T>(data: DocumentSnapshot<DocumentData>): T =>
+  ({
     ...data.data(),
     id: data.id,
-  } as T;
-};
+  } as T);
 
-export const parseDocRef = async <T>(
+export const parseDocRef = async <T extends Object>(
   data: DocumentSnapshot<DocumentData>,
-  keysWithRef: string[]
+  keysWithRef: (keyof T)[]
 ) => {
-  const initialDataWithId = { ...data.data(), id: data.id };
-  keysWithRef.forEach(async (key) => {
+  const initialDataWithId = parseGetDoc(data);
+
+  for await (const key of keysWithRef) {
     // @ts-ignore
     const data = await getDoc(initialDataWithId[key]);
     // @ts-ignore
-    initialDataWithId[key] = { ...data.data(), id: data.id };
-  });
+    initialDataWithId[key] = parseGetDoc(data);
+  }
+
   return initialDataWithId as T;
 };

@@ -3,7 +3,7 @@ import { db, secondaryAuth } from "firebase-config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useAuth } from "modules/auth/contexts/authContext";
 import { generatePassword } from "utils/generatePassword";
-import { doc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { CreateStudent } from "../types";
 
 const useStudentCreator = () => {
@@ -30,10 +30,6 @@ const useStudentCreator = () => {
       lastName,
       ...(assignedToClass ? { class: classDocRef } : {}),
     });
-    if (assignedToClass)
-      await updateDoc(classDocRef, {
-        students: arrayUnion(userDocRef),
-      });
 
     return { password, studentId: uid };
   };

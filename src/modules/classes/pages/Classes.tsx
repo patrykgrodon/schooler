@@ -1,8 +1,10 @@
 import { Box } from "@mui/material";
-import { FormDialog, PageHeader } from "common/components";
+import { useQuery } from "@tanstack/react-query";
+import { FormDialog, PageHeader, Spinner } from "common/components";
 import useModal from "common/hooks/useModal";
 import { useAuth } from "modules/auth/contexts/authContext";
-import { ClassForm, ClassesTable } from "../components";
+import { getClasses } from "../api";
+import { ClassesTable, ClassForm } from "../components";
 
 const Classes = () => {
   const { user } = useAuth();
@@ -11,8 +13,15 @@ const Classes = () => {
 
   const displayAddClassBtn = user?.accountType === "admin";
 
+  const {
+    data: classes,
+    refetch,
+    isLoading,
+  } = useQuery(["classes"], () => getClasses(user!.school.id));
+
   const onSuccess = (classId: string) => {
     closeModal();
+    refetch();
   };
 
   return (
@@ -22,7 +31,11 @@ const Classes = () => {
         textButton={displayAddClassBtn ? "Dodaj klasę" : undefined}
         textHeader="Klasy"
       />
-      <ClassesTable />
+      {isLoading ? (
+        <Spinner size="medium" />
+      ) : (
+        <ClassesTable classes={classes || []} />
+      )}
       {displayAddClassBtn ? (
         <FormDialog
           isOpen={isOpen}
