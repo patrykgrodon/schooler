@@ -1,3 +1,5 @@
+import { doc, setDoc } from "@firebase/firestore";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Spinner } from "common/components";
 import { AccountType, User } from "common/types";
 import { auth, db } from "firebase-config";
@@ -11,8 +13,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { deleteLSItem } from "utils/webStorage";
 import { getUserData } from "../api";
 import { CreateAdmin, Login } from "../types";
-import { doc, setDoc } from "@firebase/firestore";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 type AuthContextState = {
   login: Login;
@@ -36,10 +36,8 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   const { data: user, isLoading: isLoadingUserData } = useQuery(
     ["user", userInfo?.uid],
-    () => getUserData(userInfo!.uid),
-    { enabled: !!userInfo?.uid }
+    () => (userInfo ? getUserData(userInfo.uid) : undefined)
   );
-
   const login: Login = async (loginFormValues) => {
     const { email, password } = loginFormValues;
     const {

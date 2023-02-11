@@ -1,6 +1,6 @@
 import { DocumentData, DocumentReference } from "firebase/firestore";
-import { Student } from "modules/students/types";
-import { Teacher } from "modules/teachers/types";
+import { Student, StudentDoc } from "modules/students/types";
+import { Teacher, TeacherDoc } from "modules/teachers/types";
 
 export type AccountType = "admin" | "teacher" | "student";
 
@@ -9,6 +9,12 @@ export type Admin = {
   id: string;
   school: School;
 };
+export type AdminDoc = Omit<Admin, "school"> & { school: DocRef };
+
+export type UserDoc =
+  | ({ accountType: "admin" } & AdminDoc)
+  | ({ accountType: "teacher" } & TeacherDoc)
+  | ({ accountType: "student" } & StudentDoc);
 
 export type User =
   | ({ accountType: "admin" } & Admin)

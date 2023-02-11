@@ -1,11 +1,29 @@
 import { doc, getDoc } from "@firebase/firestore";
-import { User } from "common/types";
+import { getSchoolFromRef } from "common/api";
+import { User, UserDoc } from "common/types";
 import { db } from "firebase-config";
-import { parseDocRef } from "utils/firebaseHelpers";
+import { getClassFromRef } from "modules/classes/api";
+import { getSubjectFromRef } from "modules/subjects/api";
+import { parseGetDoc } from "utils/firebaseHelpers";
 
 export const getUserData = async (userId: string) => {
-  const userDoc = doc(db, "users", userId);
-  const data = await getDoc(userDoc);
-  const userData = await parseDocRef<User>(data, ["school"]);
-  return userData;
+  const userRef = doc(db, "users", userId);
+  const userDoc = await getDoc(userRef);
+  const parsedData = parseGetDoc<UserDoc>(userDoc);
+  const school = await getSchoolFromRef(parsedData.school);
+  if (parsedData.accountType === "admin") {
+    return { ...parsedData, school } as User;
+  }
+  if (parsedData.accountType === "teacher") {
+    const subjects = await Promise.all(
+      parsedData.subjects.map((subject) => getSubjectFromRef(subject))
+    );
+    const teacherOfClass = await getClassFromRef(
+      parsedData.teacherOfClass,
+      false
+    );
+    return { ...parsedData, school, subjects, teacherOfClass } as User;
+  }
+  const classVal = await getClassFromRef(parsedData.class, true);
+  return { ...parsedData, school, class: classVal } as User;
 };
