@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { FormDialog, PageHeader, Spinner } from "common/components";
+import { ErrorView, FormDialog, PageHeader, Spinner } from "common/components";
 import useModal from "common/hooks/useModal";
 import { useAuth } from "modules/auth/contexts/authContext";
 import { getClasses } from "../api";
@@ -17,6 +17,7 @@ const Classes = () => {
     data: classes,
     refetch,
     isLoading,
+    isError,
   } = useQuery(["classes"], () => getClasses(user!.school.id));
 
   const onSuccess = (classId: string) => {
@@ -25,17 +26,15 @@ const Classes = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ height: "100%" }}>
       <PageHeader
         onClick={openModal}
         textButton={displayAddClassBtn ? "Dodaj klasę" : undefined}
         textHeader="Klasy"
       />
-      {isLoading ? (
-        <Spinner size="medium" />
-      ) : (
-        <ClassesTable classes={classes || []} />
-      )}
+      {isLoading ? <Spinner size="medium" /> : null}
+      {isError && !isLoading ? <ErrorView /> : null}
+      {!isError && !isLoading ? <ClassesTable classes={classes} /> : null}
       {displayAddClassBtn ? (
         <FormDialog
           isOpen={isOpen}
