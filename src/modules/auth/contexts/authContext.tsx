@@ -9,9 +9,8 @@ import {
   signOut,
 } from "firebase/auth";
 import { createContext, useContext } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { deleteLSItem } from "utils/webStorage";
 import { getUserData } from "../api";
+import useFirebaseAuthState from "../hooks/useFirebaseAuthState";
 import { CreateAdmin, Login } from "../types";
 
 type AuthContextState = {
@@ -28,15 +27,17 @@ type AuthContextProviderProps = {
 };
 
 const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
-  const [userInfo, isCheckingAuth] = useAuthState(auth);
+  const { userInfo, isCheckingAuth } = useFirebaseAuthState(auth);
+
   const queryClient = useQueryClient();
 
   const setUserData = (user: User | undefined) =>
     queryClient.setQueryData(["user", userInfo?.uid], () => user);
 
-  const { data: user, isLoading: isLoadingUserData } = useQuery(
+  const { data: user, isInitialLoading: isLoadingUserData } = useQuery(
     ["user", userInfo?.uid],
-    () => (userInfo ? getUserData(userInfo.uid) : undefined)
+    () => getUserData(userInfo!.uid),
+    { enabled: !!userInfo }
   );
   const login: Login = async (loginFormValues) => {
     const { email, password } = loginFormValues;
@@ -50,7 +51,6 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   const logout = async () => {
     await signOut(auth);
-    deleteLSItem("auth");
     setUserData(undefined);
   };
 
@@ -64,7 +64,6 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     await setDoc(userDocRef, { email, accountType, schoolId: uid });
     await setDoc(schoolDocRef, { schoolName });
   };
-
   if (isCheckingAuth || isLoadingUserData)
     return <Spinner fullPage size="large" />;
 
