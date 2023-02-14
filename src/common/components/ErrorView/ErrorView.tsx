@@ -5,9 +5,10 @@ type ErrorViewProps = {
   sx?: SxProps;
 };
 
-const defaultText = "Wystąpił nieoczekiwany problem! Spróbuj odświeżyć stronę.";
+export const defaultErrorText =
+  "Wystąpił nieoczekiwany problem! Spróbuj odświeżyć stronę.";
 
-const ErrorView = ({ sx, text = defaultText }: ErrorViewProps) => {
+const ErrorView = ({ sx, text = defaultErrorText }: ErrorViewProps) => {
   return (
     <Box
       sx={{
