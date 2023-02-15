@@ -1,4 +1,5 @@
 import { DocRef, School } from "common/types";
+import { Teacher } from "modules/teachers/types";
 
 export type SubjectFormValues = {
   name: string;
@@ -11,6 +12,7 @@ export type Subject = {
   id: string;
   name: string;
   school: School;
+  teachers: Omit<Teacher, "subjects">[];
 };
 
 export type SubjectDoc = Omit<Subject, "school"> & {

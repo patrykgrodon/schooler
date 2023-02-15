@@ -16,7 +16,7 @@ export const getUserData = async (userId: string) => {
   }
   if (parsedData.accountType === "teacher") {
     const subjects = await Promise.all(
-      parsedData.subjects.map((subject) => getSubjectFromRef(subject))
+      parsedData.subjects.map((subject) => getSubjectFromRef(subject, false))
     );
     const teacherOfClass = await getClassFromRef(
       parsedData.teacherOfClass,

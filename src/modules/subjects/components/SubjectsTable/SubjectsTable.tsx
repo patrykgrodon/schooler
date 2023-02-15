@@ -1,6 +1,4 @@
-import { EditOutlined, VisibilityOutlined } from "@mui/icons-material";
 import {
-  IconButton,
   Paper,
   Table,
   TableBody,
@@ -9,42 +7,17 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { CenteredCell } from "common/components";
+
+import { Subject } from "modules/subjects/types";
+import SubjectsTableRow from "./SubjectsTableRow/SubjectsTableRow";
 
 const headers = ["Nazwa przedmiotu", "Nauczyciele", "Akcje"];
 
-const rows = [
-  {
-    name: "Biologia",
-    teachers: ["Jan Pawlak"],
-  },
-  {
-    name: "Chemia",
-    teachers: ["Krzysztof Granus"],
-  },
-  {
-    name: "Religia",
-    teachers: ["Zbigniew Robak"],
-  },
-  {
-    name: "Matematyka",
-    teachers: ["Bartosz Krzemyk", "Zbigniew Robak"],
-  },
-  {
-    name: "Fizyka",
-    teachers: ["Bartosz Krzemyk"],
-  },
-  {
-    name: "Wychowanie fizyczne",
-    teachers: ["Dawid Kopiec"],
-  },
-  {
-    name: "Język polski",
-    teachers: ["Mariusz Wnuk"],
-  },
-];
+type SubjectsTableProps = {
+  subjects: Subject[];
+};
 
-const SubjectsTable = () => {
+const SubjectsTable = ({ subjects }: SubjectsTableProps) => {
   return (
     <Paper sx={{ overflow: "hidden" }}>
       <TableContainer>
@@ -59,28 +32,8 @@ const SubjectsTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map(({ name, teachers }) => (
-              <TableRow
-                key={name}
-                sx={{
-                  "&:last-child td": {
-                    border: "none",
-                  },
-                }}>
-                <TableCell>{name}</TableCell>
-                <CenteredCell>{teachers.join(", ")}</CenteredCell>
-
-                <CenteredCell>
-                  {[VisibilityOutlined, EditOutlined].map((Icon, i) => (
-                    <IconButton
-                      key={i}
-                      size="small"
-                      sx={{ "&:not(:last-child)": { mr: 1 } }}>
-                      <Icon fontSize="small" />
-                    </IconButton>
-                  ))}
-                </CenteredCell>
-              </TableRow>
+            {subjects.map((subject) => (
+              <SubjectsTableRow key={subject.id} subject={subject} />
             ))}
           </TableBody>
         </Table>

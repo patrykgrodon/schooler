@@ -47,11 +47,12 @@ export async function getClassFromRef(
   ]);
   const common = { ...parsedFlat, school, students };
   if (withClassTeacher) {
-    const classTeacher = await getTeacherFromRef(classTeacherRef);
+    const classTeacher = await getTeacherFromRef(classTeacherRef, true);
     return { ...common, classTeacher };
   }
   return common;
 }
+
 export function getClassFromDoc<T extends boolean>(
   doc: ClassDoc,
   withClassTeacher: T
@@ -68,7 +69,7 @@ export async function getClassFromDoc(
   ]);
   const common = { ...doc, school, students };
   if (withClassTeacher) {
-    const classTeacher = await getTeacherFromRef(doc.classTeacher);
+    const classTeacher = await getTeacherFromRef(doc.classTeacher, true);
     return { ...common, classTeacher };
   }
   return common;
