@@ -1,7 +1,4 @@
-import { EditOutlined, VisibilityOutlined } from "@mui/icons-material";
 import {
-  Box,
-  IconButton,
   Paper,
   Table,
   TableBody,
@@ -10,10 +7,10 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { CenteredCell } from "common/components";
+
 import { ClassType } from "modules/classes/types";
-import { generatePath, Link } from "react-router-dom";
-import routes from "routes/routePaths";
+
+import ClassesTableRow from "./ClassesTableRow/ClassesTableRow";
 
 const headers = ["Nazwa klasy", "Wychowawca", "Ilość uczniów", "Akcje"];
 
@@ -36,42 +33,8 @@ const ClassesTable = ({ classes }: ClassesTableProps) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {classes.map(({ name, classTeacher, students, id }) => (
-              <TableRow
-                key={id}
-                sx={{
-                  "&:last-child td": {
-                    border: "none",
-                  },
-                }}>
-                <TableCell>
-                  <Box
-                    sx={{
-                      color: (theme) => theme.palette.text.primary,
-                      textDecoration: "none",
-                    }}
-                    component={Link}
-                    to={generatePath(routes.Class, { classId: id })}>
-                    <strong>{name}</strong>
-                  </Box>
-                </TableCell>
-                <CenteredCell>
-                  {classTeacher
-                    ? `${classTeacher.firstName} ${classTeacher.lastName}`
-                    : "---"}
-                </CenteredCell>
-                <CenteredCell>{students.length}</CenteredCell>
-                <CenteredCell>
-                  {[VisibilityOutlined, EditOutlined].map((Icon, i) => (
-                    <IconButton
-                      key={i}
-                      size="small"
-                      sx={{ "&:not(:last-child)": { mr: 1 } }}>
-                      <Icon fontSize="small" />
-                    </IconButton>
-                  ))}
-                </CenteredCell>
-              </TableRow>
+            {classes.map((classObj) => (
+              <ClassesTableRow key={classObj.id} class={classObj} />
             ))}
           </TableBody>
         </Table>
