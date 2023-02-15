@@ -36,7 +36,7 @@ const Class = () => {
           {getHeaderContent()}
         </Typography>
 
-        {activeTab === 0 ? <StudentsTable /> : null}
+        {activeTab === 0 ? <StudentsTable students={[]} /> : null}
         {activeTab === 1 ? <TeachersTable /> : null}
         {activeTab === 2 ? <LessonPlanTable /> : null}
       </Box>

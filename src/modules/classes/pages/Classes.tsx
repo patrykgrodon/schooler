@@ -18,7 +18,7 @@ const Classes = () => {
     refetch,
     isLoading,
     isError,
-  } = useQuery(["classes"], () => getClasses(user!.school.id));
+  } = useQuery(["classes", user?.school.id], () => getClasses(user!.school.id));
 
   const onSuccess = (classId: string) => {
     closeModal();
