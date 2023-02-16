@@ -21,7 +21,7 @@ export type Teacher = {
   lastName: string;
   school: School;
   subjects: Subject[];
-  teacherOfClass: ClassType;
+  teacherOfClass?: ClassType;
 };
 
 export type TeacherDoc = Omit<

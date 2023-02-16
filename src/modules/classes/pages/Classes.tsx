@@ -26,7 +26,7 @@ const Classes = () => {
   };
 
   return (
-    <Box sx={{ height: "100%" }}>
+    <Box>
       <PageHeader
         onClick={openModal}
         textButton={displayAddClassBtn ? "Dodaj klasę" : undefined}

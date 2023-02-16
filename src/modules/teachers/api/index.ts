@@ -1,10 +1,34 @@
 import { getSchoolFromRef } from "common/api";
 import { DocRef } from "common/types";
-import { getDoc } from "firebase/firestore";
+import { db } from "firebase-config";
+import {
+  getDoc,
+  query,
+  collection,
+  where,
+  doc,
+  getDocs,
+} from "firebase/firestore";
 import { getClassFromRef } from "modules/classes/api";
 import { getSubjectFromRef } from "modules/subjects/api";
-import { parseGetDoc } from "utils/firebaseHelpers";
+import { parseGetDoc, parseGetDocs } from "utils/firebaseHelpers";
 import { Teacher, TeacherDoc } from "../types";
+
+export const getTeachers = async (schoolId: string) => {
+  const q = query(
+    collection(db, "users"),
+    where("school", "==", doc(db, "schools", schoolId)),
+    where("accountType", "==", "teacher")
+  );
+  const data = await getDocs(q);
+  const parsedData = parseGetDocs<TeacherDoc[]>(data);
+
+  const teachers = await Promise.all(
+    parsedData.map((data) => getTeacherFromDoc(data, true))
+  );
+
+  return teachers;
+};
 
 export function getTeacherFromDoc<T extends boolean>(
   teacherDoc: TeacherDoc,
