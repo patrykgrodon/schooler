@@ -1,41 +1,34 @@
 import { Box } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
-import { ErrorView, FormDialog, PageHeader, Spinner } from "common/components";
+import { useQueryClient } from "@tanstack/react-query";
+import { FormDialog, PageHeader } from "common/components";
 import useModal from "common/hooks/useModal";
 import { useAuth } from "modules/auth/contexts/authContext";
-import { getClasses } from "../api";
-import { ClassesTable, ClassForm } from "../components";
+import { ClassForm } from "../components";
+import { SchoolClasses, TeacherClasses } from "../components";
 
 const Classes = () => {
   const { user } = useAuth();
+  const queryClient = useQueryClient();
 
   const { isOpen, closeModal, openModal } = useModal();
 
-  const displayAddClassBtn = user?.accountType === "admin";
-
-  const {
-    data: classes,
-    refetch,
-    isLoading,
-    isError,
-  } = useQuery(["classes", user?.school.id], () => getClasses(user!.school.id));
+  const isAdmin = user?.accountType === "admin";
 
   const onSuccess = (classId: string) => {
     closeModal();
-    refetch();
+    queryClient.invalidateQueries(["classes", user?.school.id]);
   };
 
   return (
     <Box>
       <PageHeader
         onClick={openModal}
-        textButton={displayAddClassBtn ? "Dodaj klasę" : undefined}
+        textButton={isAdmin ? "Dodaj klasę" : undefined}
         textHeader="Klasy"
       />
-      {isLoading ? <Spinner size="medium" /> : null}
-      {isError && !isLoading ? <ErrorView /> : null}
-      {!isError && !isLoading ? <ClassesTable classes={classes} /> : null}
-      {displayAddClassBtn ? (
+      {isAdmin ? <SchoolClasses /> : <TeacherClasses />}
+
+      {isAdmin ? (
         <FormDialog
           isOpen={isOpen}
           handleClose={closeModal}

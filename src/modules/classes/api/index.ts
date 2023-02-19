@@ -4,8 +4,10 @@ import { db } from "firebase-config";
 import {
   collection,
   doc,
+  DocumentData,
   getDoc,
   getDocs,
+  Query,
   query,
   where,
 } from "firebase/firestore";
@@ -14,17 +16,44 @@ import { getTeacherFromRef } from "modules/teachers/api";
 import { parseGetDoc, parseGetDocs } from "utils/firebaseHelpers";
 import { ClassDoc, ClassType } from "../types";
 
-export const getClasses = async (schoolId: string) => {
-  const q = query(
-    collection(db, "classes"),
-    where("school", "==", doc(db, "schools", schoolId))
-  );
-  const data = await getDocs(q);
+const getClasses = async (query: Query<DocumentData>) => {
+  const data = await getDocs(query);
   const parsedData = parseGetDocs<ClassDoc[]>(data);
 
   const classes = await Promise.all(
     parsedData.map((data) => getClassFromDoc(data, true))
   );
+  return classes;
+};
+
+export const getTeacherClasses = async (teacherId: string) => {
+  const q1 = query(
+    collection(db, "classes"),
+    where("classTeacher", "==", doc(db, "users", teacherId))
+  );
+  const q2 = query(
+    collection(db, "classes"),
+    where("subjects.teacherId", "==", teacherId)
+  );
+
+  const classes1 = await getClasses(q1);
+  const classes2 = await getClasses(q2);
+  const classesWithoutDuplicates = classes1
+    .concat(classes2)
+    .reduce(
+      (acc, classObj) =>
+        !!acc.find((el) => el.id === classObj.id) ? acc : [...acc, classObj],
+      [] as ClassType[]
+    );
+  return classesWithoutDuplicates;
+};
+
+export const getSchoolClasses = async (schoolId: string) => {
+  const q = query(
+    collection(db, "classes"),
+    where("school", "==", doc(db, "schools", schoolId))
+  );
+  const classes = await getClasses(q);
   return classes;
 };
 
