@@ -3,9 +3,10 @@ import { Box, Tooltip, useTheme } from "@mui/material";
 type GradeProps = {
   score: number;
   average?: boolean;
+  description?: string;
 };
 
-const Grade = ({ score, average = false }: GradeProps) => {
+const Grade = ({ score, average = false, description }: GradeProps) => {
   const theme = useTheme();
   const scoreAsText = score % 1 === 0.5 ? `+${Math.floor(score)}` : score;
 
@@ -46,7 +47,7 @@ const Grade = ({ score, average = false }: GradeProps) => {
     }
   };
   return (
-    <Tooltip title={getTooltipTitle()}>
+    <Tooltip title={average ? "" : description || getTooltipTitle()}>
       <Box
         sx={{
           backgroundColor: getBgColor(),

@@ -9,7 +9,7 @@ import {
   doc,
   getDocs,
 } from "firebase/firestore";
-import { getTeacherFromDoc } from "modules/teachers/api";
+import { getTeacherFromDoc, getTeacherFromRef } from "modules/teachers/api";
 import { TeacherDoc } from "modules/teachers/types";
 import { parseGetDoc, parseGetDocs } from "utils/firebaseHelpers";
 import { Subject, SubjectDoc } from "../types";
@@ -69,3 +69,16 @@ export async function getSubjectFromRef(ref: DocRef, withTeachers: boolean) {
 
   return subject;
 }
+
+export const getClassSubjects = async (classId: string) => {
+  const data = await getDoc(doc(db, "classSubjects", classId));
+  const { subjects } = parseGetDoc<{
+    subjects: { teacher: DocRef; subject: DocRef }[];
+  }>(data);
+  const getSubject = async (el: { subject: DocRef; teacher: DocRef }) => {
+    const subject = await getSubjectFromRef(el.subject, false);
+    const teacher = await getTeacherFromRef(el.teacher, false);
+    return { subject, teacher };
+  };
+  return await Promise.all(subjects.map((el) => getSubject(el)));
+};

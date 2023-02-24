@@ -68,18 +68,8 @@ export async function getClassFromRef(
   withClassTeacher: boolean
 ): Promise<ClassType | Omit<ClassType, "classTeacher">> {
   const doc = await getDoc(ref);
-  const { classTeacher: classTeacherRef, ...parsedFlat } =
-    parseGetDoc<ClassDoc>(doc);
-  const [school, students] = await Promise.all([
-    getSchoolFromRef(parsedFlat.school),
-    getClassStudents(doc.id),
-  ]);
-  const common = { ...parsedFlat, school, students };
-  if (withClassTeacher) {
-    const classTeacher = await getTeacherFromRef(classTeacherRef, true);
-    return { ...common, classTeacher };
-  }
-  return common;
+  const classDoc = parseGetDoc<ClassDoc>(doc);
+  return await getClassFromDoc(classDoc, withClassTeacher);
 }
 
 export function getClassFromDoc<T extends boolean>(

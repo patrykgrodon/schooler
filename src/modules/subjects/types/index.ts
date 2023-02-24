@@ -18,3 +18,8 @@ export type Subject = {
 export type SubjectDoc = Omit<Subject, "school"> & {
   school: DocRef;
 };
+
+export type ClassSubject = {
+  subject: Omit<Subject, "teachers">;
+  teacher: Omit<Teacher, "subjects">;
+};

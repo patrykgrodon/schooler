@@ -34,7 +34,7 @@ const Student = () => {
           {getHeaderContent()}
         </Typography>
 
-        {activeTab === 0 ? <GradesTable /> : null}
+        {activeTab === 0 ? <GradesTable grades={[]} /> : null}
         {activeTab === 1 ? <AttendanceTable /> : null}
       </Box>
     </Box>

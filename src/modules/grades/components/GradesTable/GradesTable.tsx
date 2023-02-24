@@ -7,8 +7,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-
-import { getAllSubjects } from "modules/lessonPlan/utils";
+import { StudentGrade } from "modules/grades/types";
 
 import GradesTableRow from "../GradesTableRow/GradesTableRow";
 
@@ -21,7 +20,11 @@ const headers = [
   "Ocena końcowa",
 ];
 
-const GradesTable = () => {
+type GradesTableProps = {
+  grades: StudentGrade[];
+};
+
+const GradesTable = ({ grades }: GradesTableProps) => {
   return (
     <Paper sx={{ overflow: "hidden" }}>
       <TableContainer>
@@ -36,8 +39,8 @@ const GradesTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {getAllSubjects().map((subject) => (
-              <GradesTableRow key={subject} subject={subject} />
+            {grades.map((grade) => (
+              <GradesTableRow key={grade.subject.id} grade={grade} />
             ))}
           </TableBody>
         </Table>
