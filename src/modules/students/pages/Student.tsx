@@ -1,12 +1,29 @@
 import { Box, Typography } from "@mui/material";
-import { TabsBar } from "common/components";
+import { useQuery } from "@tanstack/react-query";
+import { ErrorView, Spinner, TabsBar } from "common/components";
 import { layoutMainPadding } from "common/components/Layout/Layout";
 import { AttendanceTable } from "modules/attendance/components";
-import { GradesTable } from "modules/grades/components";
+import { getStudent } from "../api";
+import Grades from "../components/Grades/Grades";
 import useStudentTabs from "../hooks/useStudentTabs";
 
 const Student = () => {
-  const { studentName, activeTab, changeTab, tabs } = useStudentTabs();
+  const { studentId, activeTab, changeTab, tabs } = useStudentTabs();
+
+  const {
+    data: student,
+    isLoading,
+    isError,
+  } = useQuery(["user", studentId], () => getStudent(studentId), {
+    enabled: !!studentId,
+  });
+
+  if (isLoading) return <Spinner size="medium" />;
+  if (isError) return <ErrorView />;
+
+  const { firstName, lastName } = student;
+
+  const studentName = `${firstName} ${lastName}`;
 
   const getHeaderContent = () => {
     switch (activeTab) {
@@ -19,8 +36,6 @@ const Student = () => {
     }
   };
 
-  if (!studentName)
-    return <Typography variant="h1">Brak danych o użytkowniku</Typography>;
   return (
     <Box>
       <TabsBar
@@ -34,7 +49,9 @@ const Student = () => {
           {getHeaderContent()}
         </Typography>
 
-        {activeTab === 0 ? <GradesTable grades={[]} /> : null}
+        {activeTab === 0 ? (
+          <Grades studentId={studentId} classId={student.class.id} />
+        ) : null}
         {activeTab === 1 ? <AttendanceTable /> : null}
       </Box>
     </Box>

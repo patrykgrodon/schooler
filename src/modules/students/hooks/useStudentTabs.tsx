@@ -26,7 +26,7 @@ const useStudentTabs = () => {
   ];
 
   const changeTab = (newActiveTab: number) => setActiveTab(newActiveTab);
-  return { activeTab, changeTab, studentName: studentId, tabs };
+  return { activeTab, changeTab, studentId, tabs };
 };
 
 export default useStudentTabs;

@@ -8,9 +8,10 @@ import {
   getDocs,
   Query,
   DocumentData,
+  getDoc,
 } from "firebase/firestore";
 import { getClassFromRef } from "modules/classes/api";
-import { parseGetDocs } from "utils/firebaseHelpers";
+import { parseGetDoc, parseGetDocs } from "utils/firebaseHelpers";
 import { Student, StudentDoc } from "../types";
 
 function getStudents<T extends boolean>(
@@ -27,6 +28,13 @@ async function getStudents(query: Query<DocumentData>, withClass: boolean) {
 
   return students;
 }
+
+export const getStudent = async (studentId: string) => {
+  const data = await getDoc(doc(db, "users", studentId));
+  const parsedData = parseGetDoc<StudentDoc>(data);
+  const student = await getStudentFromDoc(parsedData, true);
+  return student;
+};
 
 export const getSchoolStudents = async (schoolId: string) => {
   const q = query(

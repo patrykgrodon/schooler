@@ -16,7 +16,7 @@ type StudentsTableRowProps = {
 };
 
 const StudentsTableRow = ({ student }: StudentsTableRowProps) => {
-  const { firstName, lastName, email } = student;
+  const { firstName, lastName, email, id } = student;
   const fullName = `${firstName} ${lastName}`;
   return (
     <TableRow
@@ -32,7 +32,7 @@ const StudentsTableRow = ({ student }: StudentsTableRowProps) => {
             textDecoration: "none",
           }}
           component={Link}
-          to={generatePath(routes.Student, { studentId: fullName })}>
+          to={generatePath(routes.Student, { studentId: id })}>
           <strong>{fullName}</strong>
         </Box>
       </TableCell>
