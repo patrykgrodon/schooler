@@ -1,4 +1,4 @@
-import { SchoolOutlined, WorkOutlined } from "@mui/icons-material";
+import { SchoolOutlined, TopicOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import { generatePath, useParams } from "react-router-dom";
 import routes from "routes/routePaths";
@@ -17,8 +17,8 @@ const useClassTabs = () => {
       })
     ),
     getTabsBarItem(
-      "Nauczyciele",
-      WorkOutlined,
+      "Przedmioty",
+      TopicOutlined,
       generatePath(routes.ClassTeachers, {
         classId,
       })

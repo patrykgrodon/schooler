@@ -12,7 +12,7 @@ import {
 import { getTeacherFromDoc, getTeacherFromRef } from "modules/teachers/api";
 import { TeacherDoc } from "modules/teachers/types";
 import { parseGetDoc, parseGetDocs } from "utils/firebaseHelpers";
-import { Subject, SubjectDoc } from "../types";
+import { ClassSubject, Subject, SubjectDoc } from "../types";
 
 export const getSchoolSubjects = async (schoolId: string) => {
   const q = query(
@@ -78,7 +78,7 @@ export const getClassSubjects = async (classId: string) => {
   const getSubject = async (el: { subject: DocRef; teacher: DocRef }) => {
     const subject = await getSubjectFromRef(el.subject, false);
     const teacher = await getTeacherFromRef(el.teacher, false);
-    return { subject, teacher };
+    return { subject, teacher } as ClassSubject;
   };
   return await Promise.all(subjects.map((el) => getSubject(el)));
 };

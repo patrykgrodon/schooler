@@ -4,7 +4,8 @@ import { ErrorView, Spinner, TabsBar } from "common/components";
 import { layoutMainPadding } from "common/components/Layout/Layout";
 import LessonPlanTable from "modules/lessonPlan/components/LessonPlanTable/LessonPlanTable";
 import { getClass } from "../api";
-import { ClassStudents, ClassTeachers } from "../components";
+import { ClassStudents } from "../components";
+import ClassSubjects from "../components/ClassSubjects/ClassSubjects";
 
 import useClassTabs from "../hooks/useClassTabs";
 
@@ -29,7 +30,7 @@ const Class = () => {
       case 0:
         return `Uczniowie klasy ${name}`;
       case 1:
-        return `Nauczyciele klasy ${name}`;
+        return `Przedmioty klasy ${name}`;
       case 2:
         return `Plan lekcji klasy ${name}`;
     }
@@ -49,7 +50,7 @@ const Class = () => {
         </Typography>
 
         {activeTab === 0 ? <ClassStudents classId={classId} /> : null}
-        {activeTab === 1 ? <ClassTeachers classId={classId} /> : null}
+        {activeTab === 1 ? <ClassSubjects classId={classId} /> : null}
         {activeTab === 2 ? <LessonPlanTable /> : null}
       </Box>
     </Box>
