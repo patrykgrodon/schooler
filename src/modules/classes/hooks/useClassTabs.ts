@@ -33,7 +33,7 @@ const useClassTabs = () => {
   ];
 
   const changeTab = (newActiveTab: number) => setActiveTab(newActiveTab);
-  return { activeTab, changeTab, className: classId, tabs };
+  return { activeTab, changeTab, classId, tabs };
 };
 
 export default useClassTabs;

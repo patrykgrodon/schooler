@@ -19,13 +19,19 @@ type StudentsTableProps = {
 };
 
 const StudentsTable = ({ students }: StudentsTableProps) => {
+  const getCorrectHeaders = () => {
+    return headers.filter((header) => {
+      if (!students?.[0].class && header === "Klasa") return false;
+      return true;
+    });
+  };
   return (
     <Paper sx={{ overflow: "hidden" }}>
       <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
-              {headers.map((header, i) => (
+              {getCorrectHeaders().map((header, i) => (
                 <TableCell key={header} align={i === 0 ? "left" : "center"}>
                   {header}
                 </TableCell>
@@ -34,7 +40,7 @@ const StudentsTable = ({ students }: StudentsTableProps) => {
           </TableHead>
           <TableBody>
             {students.map((student) => (
-              <StudentsTableRow key={student.id} student={student} />
+              <StudentsTableRow key={student.id} student={student as Student} />
             ))}
           </TableBody>
         </Table>

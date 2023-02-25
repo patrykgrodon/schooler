@@ -1,28 +1,40 @@
 import { Box, Typography } from "@mui/material";
-import { TabsBar } from "common/components";
+import { useQuery } from "@tanstack/react-query";
+import { ErrorView, Spinner, TabsBar } from "common/components";
 import { layoutMainPadding } from "common/components/Layout/Layout";
 import LessonPlanTable from "modules/lessonPlan/components/LessonPlanTable/LessonPlanTable";
-import { StudentsTable } from "modules/students/components";
-import { TeachersTable } from "modules/teachers/components";
+import { getClass } from "../api";
+import { ClassStudents, ClassTeachers } from "../components";
 
 import useClassTabs from "../hooks/useClassTabs";
 
 const Class = () => {
-  const { className, activeTab, changeTab, tabs } = useClassTabs();
+  const { classId, activeTab, changeTab, tabs } = useClassTabs();
+
+  const {
+    data: classObj,
+    isLoading,
+    isError,
+  } = useQuery(["classes", classId], () => getClass(classId), {
+    enabled: !!classId,
+  });
+
+  if (isLoading) return <Spinner size="medium" />;
+  if (isError) return <ErrorView />;
+
+  const { name } = classObj;
 
   const getHeaderContent = () => {
     switch (activeTab) {
       case 0:
-        return `Uczniowie klasy ${className}`;
+        return `Uczniowie klasy ${name}`;
       case 1:
-        return `Nauczyciele klasy ${className}`;
+        return `Nauczyciele klasy ${name}`;
       case 2:
-        return `Plan lekcji klasy ${className}`;
+        return `Plan lekcji klasy ${name}`;
     }
   };
 
-  if (!className)
-    return <Typography variant="h1">Brak danych o tej klasie</Typography>;
   return (
     <Box>
       <TabsBar
@@ -36,8 +48,8 @@ const Class = () => {
           {getHeaderContent()}
         </Typography>
 
-        {activeTab === 0 ? <StudentsTable students={[]} /> : null}
-        {activeTab === 1 ? <TeachersTable teachers={[]} /> : null}
+        {activeTab === 0 ? <ClassStudents classId={classId} /> : null}
+        {activeTab === 1 ? <ClassTeachers classId={classId} /> : null}
         {activeTab === 2 ? <LessonPlanTable /> : null}
       </Box>
     </Box>

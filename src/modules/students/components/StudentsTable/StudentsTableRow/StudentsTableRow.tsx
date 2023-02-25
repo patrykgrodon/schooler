@@ -36,7 +36,7 @@ const StudentsTableRow = ({ student }: StudentsTableRowProps) => {
           <strong>{fullName}</strong>
         </Box>
       </TableCell>
-      <CenteredCell>{student.class.name}</CenteredCell>
+      {student.class ? <CenteredCell>{student.class.name}</CenteredCell> : null}
       <CenteredCell>
         <MuiLink href={`mailto:${email}`}>{email}</MuiLink>
       </CenteredCell>

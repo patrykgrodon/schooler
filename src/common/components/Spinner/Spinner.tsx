@@ -1,7 +1,7 @@
 import {
+  Box,
   CircularProgress,
   CircularProgressProps,
-  Grid,
   Paper,
 } from "@mui/material";
 
@@ -40,19 +40,18 @@ const Spinner = ({
     button ? (
       <CircularProgress size={getSpinnerSize(size)} {...props} />
     ) : (
-      <Grid
-        container
+      <Box
         sx={{
           p: (theme) => theme.spacing(4, 2),
-          m: (theme) => theme.spacing(2, "auto", 4, "auto"),
           height: "100%",
+          width: "100%",
+          display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          maxWidth: "320px",
           textAlign: "center",
         }}>
         <CircularProgress size={getSpinnerSize(size)} {...props} />
-      </Grid>
+      </Box>
     );
 
   if (fullPage) {

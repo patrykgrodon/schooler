@@ -26,6 +26,13 @@ const getClasses = async (query: Query<DocumentData>) => {
   return classes;
 };
 
+export const getClass = async (classId: string) => {
+  const data = await getDoc(doc(db, "classes", classId));
+  const classDoc = parseGetDoc<ClassDoc>(data);
+
+  return await getClassFromDoc(classDoc, true);
+};
+
 export const getTeacherClasses = async (teacherId: string) => {
   const q1 = query(
     collection(db, "classes"),
