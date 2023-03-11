@@ -3,8 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { FormDialog, PageHeader } from "common/components";
 import useModal from "common/hooks/useModal";
 import { useAuth } from "modules/auth/contexts/authContext";
-import { ClassForm } from "../components";
-import { SchoolClasses, TeacherClasses } from "../components";
+import { ClassForm, SchoolClasses, TeacherClasses } from "../components";
 
 const Classes = () => {
   const { user } = useAuth();

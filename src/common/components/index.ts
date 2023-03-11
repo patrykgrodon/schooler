@@ -1,5 +1,6 @@
 import CenteredCell from "./CenteredCell/CenteredCell";
 import CloseButton from "./dialogs/CloseButton/CloseButton";
+import ConfirmationDialog from "./ConfirmationDialog/ConfirmationDialog";
 import ErrorView from "./ErrorView/ErrorView";
 import FormDialog from "./dialogs/FormDialog/FormDialog";
 import Logo from "./Logo/Logo";
@@ -15,6 +16,7 @@ import UserMenu from "./UserMenu/UserMenu";
 export {
   CenteredCell,
   CloseButton,
+  ConfirmationDialog,
   ErrorView,
   SubmitErrorMessage,
   FormDialog,
