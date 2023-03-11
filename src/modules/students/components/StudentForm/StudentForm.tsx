@@ -1,9 +1,18 @@
-import { Autocomplete, Grid, TextField } from "@mui/material";
+import {
+  FormControl,
+  FormHelperText,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { RequestButton, SubmitErrorMessage } from "common/components";
+import useSchoolClassesNames from "modules/classes/hooks/useSchoolClassesNames";
 import useStudentCreator from "modules/students/hooks/useStudentCreator";
 import { StudentFormValues } from "modules/students/types";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { emailValidator, validationMessages } from "utils/validationPatterns";
 
 const defaultValues: StudentFormValues = {
@@ -14,11 +23,14 @@ const defaultValues: StudentFormValues = {
 };
 
 type StudentFormProps = {
-  onSuccess: (password: string, studentId: string) => void;
+  onSuccess: (studentId: string, password: string) => void;
 };
 
 const StudentForm = ({ onSuccess }: StudentFormProps) => {
+  const { classesNames } = useSchoolClassesNames();
+
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
@@ -34,8 +46,8 @@ const StudentForm = ({ onSuccess }: StudentFormProps) => {
     setError("");
     setIsLoading(true);
     try {
-      const { password, studentId } = await createStudent(formValues);
-      onSuccess(password, studentId);
+      const { studentId, password } = await createStudent(formValues);
+      onSuccess(studentId, password);
     } catch (err: any) {
       setError(err.message);
     }
@@ -84,11 +96,37 @@ const StudentForm = ({ onSuccess }: StudentFormProps) => {
         />
       </Grid>
       <Grid item xs={12} md={6}>
-        <Autocomplete
-          {...register("assignedToClass")}
-          options={["I B", "II B", "III B", "IV B", "V B"]}
-          renderInput={(params) => (
-            <TextField {...params} size="small" label="Klasa" />
+        <Controller
+          control={control}
+          name="assignedToClass"
+          rules={{
+            required: validationMessages.required,
+          }}
+          render={({ field }) => (
+            <FormControl variant="outlined" fullWidth size="small">
+              <InputLabel
+                error={!!errors.assignedToClass}
+                id={"student-form-class-field"}>
+                Klasa
+              </InputLabel>
+              <Select
+                {...field}
+                labelId={"student-form-class-field"}
+                id={"student-form-class-field"}
+                label="Klasa"
+                error={!!errors.assignedToClass}>
+                {classesNames?.map(({ id, name }) => (
+                  <MenuItem key={id} value={id}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+              {errors.assignedToClass ? (
+                <FormHelperText error>
+                  {errors.assignedToClass?.message}
+                </FormHelperText>
+              ) : null}
+            </FormControl>
           )}
         />
       </Grid>

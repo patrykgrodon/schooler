@@ -41,6 +41,7 @@ export const sx = {
   }),
   dialogActions: (theme: Theme) => ({
     flexDirection: { xs: "column", sm: "row" },
+    columnGap: 2,
     "& button:last-child": {
       marginBottom: { xs: theme.spacing(1), sm: 0 },
       marginLeft: { xs: "0", sm: theme.spacing(1) },

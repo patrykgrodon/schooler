@@ -16,7 +16,7 @@ type CommonProps = {
   open: boolean;
   title: string;
   mainButtonText: string;
-  text?: string;
+  text?: string | React.ReactNode;
   oneAction?: boolean;
   isLoading?: boolean;
   buttonIcon?: any;

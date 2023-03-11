@@ -1,6 +1,6 @@
 import { AccountType } from "common/types";
 import { db, secondaryAuth } from "firebase-config";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, deleteUser } from "firebase/auth";
 import { useAuth } from "modules/auth/contexts/authContext";
 import { generatePassword } from "utils/generatePassword";
 import { doc, setDoc } from "firebase/firestore";
@@ -15,23 +15,26 @@ const useStudentCreator = () => {
     assignedToClass,
   }) => {
     const password = generatePassword();
-    const {
-      user: { uid },
-    } = await createUserWithEmailAndPassword(secondaryAuth, email, password);
+    const { user: addedUser } = await createUserWithEmailAndPassword(
+      secondaryAuth,
+      email,
+      password
+    );
 
-    const userDocRef = doc(db, "users", uid);
-    const classDocRef = doc(db, "classes", assignedToClass);
+    const userDocRef = doc(db, "users", addedUser.uid);
     const accountType: AccountType = "student";
     await setDoc(userDocRef, {
       email,
       accountType,
-      school: user!.school,
+      school: doc(db, "schools", user!.school.id),
       firstName,
       lastName,
-      ...(assignedToClass ? { class: classDocRef } : {}),
-    });
+      ...(assignedToClass
+        ? { class: doc(db, "classes", assignedToClass) }
+        : {}),
+    }).catch(() => deleteUser(addedUser));
 
-    return { password, studentId: uid };
+    return { password, studentId: addedUser.uid };
   };
   return { createStudent };
 };

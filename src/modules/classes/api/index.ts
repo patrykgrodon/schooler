@@ -100,3 +100,14 @@ export async function getClassFromDoc(
   }
   return common;
 }
+
+export const getSchoolClassesNames = async (schoolId: string) => {
+  const q = query(
+    collection(db, "classes"),
+    where("school", "==", doc(db, "schools", schoolId))
+  );
+  const data = await getDocs(q);
+  const parsedData = parseGetDocs<ClassDoc[]>(data);
+
+  return parsedData.map(({ id, name }) => ({ id, name }));
+};
