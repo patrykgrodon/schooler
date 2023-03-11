@@ -22,25 +22,31 @@ const GradesTableRow = ({ grade }: GradesTableRowProps) => {
         {firstTerm.map((grade, i) => (
           <Grade key={i} score={grade.value} description={grade.description} />
         ))}
+        {firstTerm.length === 0 ? "---" : null}
       </CenteredCell>
       <CenteredCell boxProps={{ sx: { columnGap: 1 } }}>
         {secondTerm.map((grade, i) => (
           <Grade key={i} score={grade.value} description={grade.description} />
         ))}
+        {secondTerm.length === 0 ? "---" : null}
       </CenteredCell>
       <CenteredCell tableCellProps={{ sx: { width: "140px" } }}>
-        <Grade
-          score={calcAvg(
-            firstTerm.concat(secondTerm).map((grade) => grade.value)
-          )}
-          average
-        />
+        {firstTerm.length === 0 && secondTerm.length === 0 ? (
+          "---"
+        ) : (
+          <Grade
+            score={calcAvg(
+              firstTerm.concat(secondTerm).map((grade) => grade.value)
+            )}
+            average
+          />
+        )}
       </CenteredCell>
       <CenteredCell tableCellProps={{ sx: { width: "140px" } }}>
-        <Grade score={midYearGrade} />
+        {midYearGrade ? <Grade score={midYearGrade} /> : "---"}
       </CenteredCell>
       <CenteredCell tableCellProps={{ sx: { width: "140px" } }}>
-        <Grade score={finalGrade} />
+        {finalGrade ? <Grade score={finalGrade} /> : "---"}
       </CenteredCell>
     </TableRow>
   );

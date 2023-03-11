@@ -1,9 +1,9 @@
 import { AccountType } from "common/types";
 import { db, secondaryAuth } from "firebase-config";
 import { createUserWithEmailAndPassword, deleteUser } from "firebase/auth";
+import { deleteDoc, doc, setDoc } from "firebase/firestore";
 import { useAuth } from "modules/auth/contexts/authContext";
 import { generatePassword } from "utils/generatePassword";
-import { doc, setDoc } from "firebase/firestore";
 import { CreateStudent } from "../types";
 
 const useStudentCreator = () => {
@@ -32,7 +32,17 @@ const useStudentCreator = () => {
       ...(assignedToClass
         ? { class: doc(db, "classes", assignedToClass) }
         : {}),
-    }).catch(() => deleteUser(addedUser));
+    }).catch(() => {
+      deleteUser(addedUser);
+      throw new Error(`Error while adding user`);
+    });
+    await setDoc(doc(db, "grades", addedUser.uid), { subjects: [] }).catch(
+      () => {
+        deleteDoc(userDocRef);
+        deleteUser(addedUser);
+        throw new Error(`Error while adding user`);
+      }
+    );
 
     return { password, studentId: addedUser.uid };
   };
